@@ -11,9 +11,22 @@
           <md-nav-item md-nav-href="#hello" name="hello">Hello Three</md-nav-item>
         </md-nav-bar>
       </md-content>
-      <md-button class="md-icon-button" aria-label="User" >
-        <md-icon class="material-icons">face</md-icon>
-      </md-button>
+      <md-menu md-position-mode="target-right target" >
+        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+          <md-icon class="material-icons">face</md-icon>
+        </md-button>
+        <md-menu-content width="4" >
+          <md-menu-item ng-repeat="item in [1, 2, 3]">
+            <md-button ng-disabled="$first" ng-click="ctrl.announceClick($index)">
+              <div layout="row" flex>
+                <p flex>Option {{item}}</p>
+                <md-icon md-menu-align-target md-svg-icon="call:portable-wifi-off" style="margin: auto 3px auto 0;"></md-icon>
+              </div>
+              <md-divider ng-if="$first"></md-divider>
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
     </div>
   </md-toolbar>
 
