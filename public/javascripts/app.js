@@ -18,8 +18,24 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         template: '<h3>Hello</h3>'
     };
 
+    var loginState = {
+        name: 'login',
+        url: '/login',
+        templateUrl: '/views/login.html',
+        controller: 'UserLoginController as userLoginController'
+    };
+
+    var userRegistrationState = {
+        name: 'userRegistration',
+        url: '/registration',
+        templateUrl: '/views/registration.html',
+        controller: 'UserRegistrationCtrl as userRegistration'
+    };
+
     $stateProvider.state(indexState);
     $stateProvider.state(helloState);
+    $stateProvider.state(loginState);
+    $stateProvider.state(userRegistrationState);
 });
 app.controller('BootCtrl', function($scope, $state, $rootScope){
     $state.go('index');
