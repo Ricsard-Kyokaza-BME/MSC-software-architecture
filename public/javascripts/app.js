@@ -1,4 +1,4 @@
-var app = angular.module('HotelReservation', ['ui.router', 'ngFileUpload', 'ngMaterial']);
+var app = angular.module('HotelReservation', ['ui.router', 'ui.bootstrap', 'ngFileUpload', 'ngMaterial']);
 app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     $mdIconProvider.fontSet('md', 'material-icons');
     $mdThemingProvider.theme('default')
@@ -12,12 +12,6 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         templateUrl: '/views/index.html'
     };
 
-    var helloState = {
-        name: 'hello',
-        url: '/hello',
-        template: '<h3>Hello</h3>'
-    };
-
     var loginState = {
         name: 'login',
         url: '/login',
@@ -28,12 +22,19 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     var userRegistrationState = {
         name: 'userRegistration',
         url: '/registration',
-        templateUrl: '/views/registration.html',
-        controller: 'UserRegistrationCtrl as userRegistration'
+        onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
+            $mdDialog.show({
+                clickOutsideToClose: true,
+                templateUrl: "/views/registration.html",
+                controller: 'UserRegistrationCtrl as userRegistration',
+                onComplete: function () {
+                    $state.go('index');
+                }
+            });
+        }]
     };
 
     $stateProvider.state(indexState);
-    $stateProvider.state(helloState);
     $stateProvider.state(loginState);
     $stateProvider.state(userRegistrationState);
 });

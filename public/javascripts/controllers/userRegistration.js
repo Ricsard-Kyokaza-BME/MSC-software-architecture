@@ -1,5 +1,5 @@
 var app = angular.module('HotelReservation');
-app.controller('UserRegistrationCtrl', function($http, $mdToast){
+app.controller('UserRegistrationCtrl', function($http, $mdToast, $mdDialog){
     var vm = this;
     vm.user = {};
     vm.user.hotels = [];
@@ -9,11 +9,11 @@ app.controller('UserRegistrationCtrl', function($http, $mdToast){
         $http.post('/registration', vm.user)
             .success(function(data) {
                 $mdToast.show($mdToast.simple().content('SUCCESS'));
-                console.log(data);
+                $mdDialog.hide();
             })
             .error(function(err) {
                 $mdToast.show($mdToast.simple().content('FAILED'));
-                console.log(err);
+                $mdDialog.hide();
             })
     };
 

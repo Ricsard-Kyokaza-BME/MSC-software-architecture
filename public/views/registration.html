@@ -19,15 +19,17 @@
                         <input type="text" name="lastName" ng-model="userRegistration.user.lastName" required>
                     </md-input-container>
                 </div>
-                <div layout-gt-sm="row">
+                <div layout-gt-sm="row" layout-sm="column" layout-xs="column" layout-align="start center">
                     <md-input-container>
                         <label>Username</label>
                         <input type="text" name="username" ng-model="userRegistration.user.username" required>
                     </md-input-container>
-                    <md-radio-group ng-model="userRegistration.user.role">
-                        <md-radio-button value="guest" class="md-primary">Guest</md-radio-button>
-                        <md-radio-button value="host">Host</md-radio-button>
-                    </md-radio-group>
+                    <md-input-container flex="50" layout-gt-sm="row" layout-align="center center">
+                        <md-radio-group ng-model="userRegistration.user.role">
+                            <md-radio-button value="guest" class="md-primary">Guest</md-radio-button>
+                            <md-radio-button value="host">Host</md-radio-button>
+                        </md-radio-group>
+                    </md-input-container>
                 </div>
                 <div layout-gt-sm="row">
                     <md-input-container>
@@ -39,7 +41,9 @@
                         <input type="password" name="password" ng-model="userRegistration.user.password" required>
                     </md-input-container>
                 </div>
-                <md-button type="submit">Register</md-button>
+                <div layout-gt-sm="row">
+                    <md-button type="submit">Register</md-button>
+                </div>
             </form>
         </md-card-content>
     </md-card>
