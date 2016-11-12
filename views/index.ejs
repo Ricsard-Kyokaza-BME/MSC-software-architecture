@@ -2,6 +2,22 @@
 <html>
   <% include header.html %>
   <body ng-app="HotelReservation" ng-controller="BootCtrl">
+  <md-toolbar class="md-hue-2">
+    <div class="md-toolbar-tools" layout-xs="column" layout="row" layout-align="space-between center">
+      <md-content class="md-padding" layout-xs="column" layout="row">
+        <md-nav-bar md-selected-nav-item="currentNavItem" layout-xs="column" layout="row" nav-bar-aria-label="navigation links">
+          <md-nav-item md-nav-href="#hello" name="hello">Hello One</md-nav-item>
+          <md-nav-item md-nav-href="#hello" name="hello">Hello Two</md-nav-item>
+          <md-nav-item md-nav-href="#hello" name="hello">Hello Three</md-nav-item>
+        </md-nav-bar>
+      </md-content>
+      <md-button class="md-icon-button" aria-label="User" >
+        <md-icon class="material-icons">face</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
     <ui-view></ui-view>
+
   </body>
 </html>
