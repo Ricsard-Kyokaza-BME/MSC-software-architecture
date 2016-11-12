@@ -1,7 +1,10 @@
 var app = angular.module('HotelReservation', ['ui.router', 'ngFileUpload', 'ngMaterial']);
-app.config(function($stateProvider, $mdIconProvider) {
+app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     $mdIconProvider.fontSet('md', 'material-icons');
-
+    $mdThemingProvider.theme('default')
+        .dark()
+        .primaryPalette('teal')
+        .accentPalette('cyan');
 
     var indexState = {
         name: 'index',
