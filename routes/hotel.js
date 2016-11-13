@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
         if (err){
             commons.sendError(req, res, 'Error in getting hotels', err);
         } else {
-            res.json({result: docs});
+            res.json({results: docs});
         }
     });
 });
@@ -21,11 +21,11 @@ router.post('/', commons.isAuthenticated, function(req, res, next) {
     hotel.owner = req.user._id;
     hotel.rating = 0;
 
-    hotel.save(function(err, savedInspection) {
+    hotel.save(function(err, savedHotel) {
         if (err){
             commons.sendError(req, res, 'Error in add hotel', err);
         } else {
-            res.json(savedInspection);
+            res.json(savedHotel);
         }
     });
 });
