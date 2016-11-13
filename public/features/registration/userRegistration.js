@@ -18,11 +18,12 @@ function userRegistrationCtrlConstructor($injector){
     vm.registerUser = function() {
         $http.post('/registration', vm.user)
             .success(function(data) {
-                $mdToast.show($mdToast.simple().content('SUCCESS'));
+                $mdToast.show($mdToast.simple().content('Successful registration'));
                 $state.go(StateHandler.getPreviousStateName());
             })
             .error(function(err) {
-                $mdToast.show($mdToast.simple().content('FAILED'));
+                $mdToast.show($mdToast.simple().content('Registration failed'));
+                console.log(err);
             });
     };
 
