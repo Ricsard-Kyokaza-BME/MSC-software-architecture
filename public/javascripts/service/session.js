@@ -46,6 +46,10 @@ function sessionServiceConstructor($injector){
         delete sessionStorage.user;
     };
 
+    /**
+     * Logout the user and remove from session storage
+     * then go to index state
+     */
     service.logout = function() {
         $http.get('/logout')
             .success(function () {
