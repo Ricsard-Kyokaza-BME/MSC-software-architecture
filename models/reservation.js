@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('Reservation',{
-    rooms:      String,
+    owner:      String,
+    room:       String,
     hotelId:    String,
     startDate:  Date,
     endDate:    Date

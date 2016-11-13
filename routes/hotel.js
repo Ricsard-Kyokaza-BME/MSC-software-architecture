@@ -19,7 +19,6 @@ router.get('/', function(req, res, next) {
 router.post('/', commons.isAuthenticated, function(req, res, next) {
     var hotel = new Hotel(req.body);
     hotel.owner = req.user._id;
-    hotel.rating = 0;
 
     hotel.save(function(err, savedHotel) {
         if (err){
@@ -32,11 +31,11 @@ router.post('/', commons.isAuthenticated, function(req, res, next) {
 
 /* GET specified hotel. */
 router.get('/:id', function(req, res, next) {
-    Hotel.find({_id: req.params.id}, function(err,docs){
+    Hotel.findOne({_id: req.params.id}, function(err, hotel){
         if (err){
             commons.sendError(req, res, 'Error in getting hotel', err);
         } else {
-            res.json({results: docs});
+            res.json(hotel);
         }
     });
 });
@@ -58,7 +57,6 @@ router.delete('/:id', commons.isAuthenticated, function(req, res, next) {
         if (err){
             console.sendError(req, res, 'Error in removing hotel', err);
         } else {
-            res.status(200);
             res.json({id: hotel._id});
         }
     });

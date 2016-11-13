@@ -6,7 +6,7 @@ var commons = require('../commonFunctions');
 
 /* GET list user's reviews. */
 router.get('/', function(req, res, next) {
-    Review.find({owner: req.user._id}, function(err,docs){
+    Review.find({owner: req.user._id}, function(err, docs){
         if (err){
             commons.sendError(req, res, 'Error in getting reviews', err);
         } else {
@@ -32,11 +32,11 @@ router.post('/', commons.isAuthenticated, function(req, res, next) {
 
 /* GET specified review. */
 router.get('/:id', function(req, res, next) {
-    Review.find({_id: req.params.id}, function(err,docs){
+    Review.findOne({_id: req.params.id}, function(err, review){
         if (err){
             commons.sendError(req, res, 'Error in getting review', err);
         } else {
-            res.json({results: docs});
+            res.json(review);
         }
     });
 });
@@ -58,7 +58,6 @@ router.delete('/:id', commons.isAuthenticated, function(req, res, next) {
         if (err){
             console.sendError(req, res, 'Error in removing review', err);
         } else {
-            res.status(200);
             res.json({id: review._id});
         }
     });
