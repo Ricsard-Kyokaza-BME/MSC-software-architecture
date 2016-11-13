@@ -12,23 +12,13 @@ app.factory( "Review", function() {
      * @constructor
      */
     function Review( id, owner, title, hotelId, description, date, rating) {
-        if(id != undefined) {
-            this.id = id;
-            this.owner = owner;
-            this.title = title;
-            this.hotelId = hotelId;
-            this.description = description;
-            this.date = date;
-            this.rating = rating;
-        } else {
-            this.id = '';
-            this.owner = '';
-            this.title = '';
-            this.hotelId = '';
-            this.description = '';
-            this.date = new Date();
-            this.rating = 0;
-        }
+        this.id = id || '';
+        this.owner = owner || '';
+        this.title = title || '';
+        this.hotelId = hotelId || '';
+        this.description = description || '';
+        this.date = date || new Date();
+        this.rating = rating || 0;
     }
 
     /**

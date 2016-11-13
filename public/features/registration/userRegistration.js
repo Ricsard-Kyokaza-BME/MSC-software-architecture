@@ -19,23 +19,15 @@ function userRegistrationCtrlConstructor($injector){
         $http.post('/registration', vm.user)
             .success(function(data) {
                 $mdToast.show($mdToast.simple().content('SUCCESS'));
-                $mdDialog.hide();
                 $state.go(StateHandler.getPreviousStateName());
             })
             .error(function(err) {
                 $mdToast.show($mdToast.simple().content('FAILED'));
-                $mdDialog.hide();
-            })
+            });
     };
 
-    vm.roleOnChange = function (it) {
-        if(it) {
-            vm.user.role = 'guest';
-        } else {
-            vm.user.role = 'host';
-        }
-    };
 
+    //Password validation
     var password = document.getElementById("password");
     var confirm_password = document.getElementById("password2");
 
@@ -49,5 +41,4 @@ function userRegistrationCtrlConstructor($injector){
 
     password.onchange = validatePassword;
     confirm_password.onkeyup = validatePassword;
-
 }

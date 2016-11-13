@@ -13,25 +13,14 @@ app.factory( "Hotel", function() {
      * @constructor
      */
     function Hotel( id, name, owner, description, location, luxuryLevel, reviews, rooms ) {
-        if(id != undefined) {
-            this.id = id;
-            this.name = name;
-            this.owner = owner;
-            this.description = description;
-            this.location = location;
-            this.luxuryLevel = luxuryLevel;
-            this.reviews = reviews;
-            this.rooms = rooms;
-        } else {
-            this.id = '';
-            this.name = '';
-            this.owner = '';
-            this.description = '';
-            this.location = '';
-            this.luxuryLevel = 0;
-            this.reviews = [];
-            this.rooms = [];
-        }
+        this.id = id || '';
+        this.name = name || '';
+        this.owner = owner || '';
+        this.description = description || '';
+        this.location = location || '';
+        this.luxuryLevel = luxuryLevel || 1;
+        this.reviews = reviews || [];
+        this.rooms = rooms || [];
     }
 
     /**

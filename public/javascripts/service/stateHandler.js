@@ -4,8 +4,6 @@ app.service('StateHandler', stateHandlerConstructor);
 stateHandlerConstructor.$inject = ['$injector'];
 
 function stateHandlerConstructor($injector){
-    var $rootScope = $injector.get('$rootScope');
-
     var currentState = undefined;
     var previousState = undefined;
     var service = {};

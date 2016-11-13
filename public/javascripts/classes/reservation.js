@@ -1,5 +1,5 @@
 var app = angular.module('HotelReservation');
-app.factory( "Reservation", function() {
+app.factory( "Reservation", function(Room) {
     /**
      * Constructor
      * @param {string} id
@@ -11,21 +11,12 @@ app.factory( "Reservation", function() {
      * @constructor
      */
     function Reservation( id, owner, room, hotelId, startDate, endDate) {
-        if(id != undefined) {
-            this.id = id;
-            this.owner = owner;
-            this.room = room;
-            this.hotelId = hotelId;
-            this.startDate = startDate;
-            this.endDate = endDate;
-        } else {
-            this.id = '';
-            this.owner = '';
-            this.room = '';
-            this.hotelId = '';
-            this.startDate = new Date();
-            this.endDate = new Date();
-        }
+        this.id = id || '';
+        this.owner = owner || '';
+        this.room = room || new Room();
+        this.hotelId = hotelId || '';
+        this.startDate = startDate || new Date();
+        this.endDate = endDate || new Date();
     }
 
     /**

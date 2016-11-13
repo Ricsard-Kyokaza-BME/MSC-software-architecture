@@ -11,21 +11,12 @@ app.factory( "Room", function() {
      * @constructor
      */
     function Room( id, type, description, hotelId, quantity, capacity ) {
-        if(id != undefined) {
-            this.id = id;
-            this.type = type;
-            this.description = description;
-            this.hotelId = hotelId;
-            this.quantity = quantity;
-            this.capacity = capacity;
-        } else {
-            this.id = '';
-            this.type = '';
-            this.description = '';
-            this.hotelId = '';
-            this.quantity = 0;
-            this.capacity = 0;
-        }
+        this.id = id || '';
+        this.type = type || '';
+        this.description = description || '';
+        this.hotelId = hotelId || '';
+        this.quantity = quantity || 0;
+        this.capacity = capacity || 0;
     }
 
     /**
