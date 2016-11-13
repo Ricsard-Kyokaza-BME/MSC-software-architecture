@@ -47,6 +47,7 @@ router.post('/', commons.isAuthenticated, commons.hasGuestLevel, function(req, r
     });
 });
 
+//TODO
 /* GET specified reservation. */
 router.get('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
     Reservation.findOne({_id: req.params.id}, function(err, reservation){
