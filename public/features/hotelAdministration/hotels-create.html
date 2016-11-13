@@ -9,6 +9,9 @@
         </md-toolbar>
         <md-card-content>
             <form name="createHotelForm" ng-submit="hotelCreate.createHotel()" flex="100">
+                <div layout-gt-sm="row" flex="50">
+                    <md-subheader flex="100">General</md-subheader>
+                </div>
                 <div layout-gt-sm="row">
                     <md-input-container>
                         <label>Name</label>
@@ -33,11 +36,8 @@
                         <textarea type="text" rows="5" name="description" ng-model="hotelCreate.hotel.description" required></textarea>
                     </md-input-container>
                 </div>
-                <div layout-gt-sm="row" layout-align="start center">
-                    <span>Rooms</span>
-                    <!--<md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">-->
-                        <!--<md-icon class="material-icons" ng-click="hotelCreate.addRoom()">add_circle_outline</md-icon>-->
-                    <!--</md-button>-->
+                <div layout-gt-sm="row" flex="50">
+                    <md-subheader flex="100">Rooms</md-subheader>
                 </div>
 
                 <div name="addRoom" >
@@ -62,27 +62,6 @@
                     <label>{{room.description}}</label>
                     <label>{{room.quantity}}</label>
                     <label>{{room.capacity}}</label>
-                </div>
-                <div layout-gt-sm="row">
-                    <md-input-container>
-                        <md-button class="md-raised md-primary"
-                                   type="file"
-                                   name="imageSelect"
-                                   ngf-select ngf-multiple="true" ngf-select ng-model="hotelCreate.images">Select images</md-button>
-                    </md-input-container>
-                    <md-input-container>
-                        <span class="md-button md-raised md-warn" ng-click="hotelCreate.uploadImages()">Upload</span>
-                    </md-input-container>
-                    <md-input-container ng-if="hotelCreate.images.length > 0">
-                        <md-subheader>Selected images</md-subheader>
-                        <md-divider></md-divider>
-                        <md-list>
-                            <md-list-item ng-repeat="image in hotelCreate.images">
-                                <span class="flex">{{image.name}}</span>
-                                <span class="md-button material-icons" ng-click="deleteImage(image)">delete</span>
-                            </md-list-item>
-                        </md-list>
-                    </md-input-container>
                 </div>
                 <div layout-gt-sm="column" flex="50">
                     <div layout-gt-sm="row" flex="100">
