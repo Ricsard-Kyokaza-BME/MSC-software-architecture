@@ -21,6 +21,12 @@ module.exports = function(passport){
     res.json({page: '/', user: req.user});
   });
 
+  /* Handle Logout */
+  router.get('/logout', function(req, res) {
+    req.logout();
+    res.json({page: '/'});
+  });
+
   /* GET Registration Page */
   router.get('/registration', function(req, res){
     res.render('register',{message: req.flash('message')});
