@@ -46,6 +46,36 @@ function bootCtrlConstructor($scope, $injector){
     var $state = $injector.get('$state');
     var $rootScope = $injector.get('$rootScope');
     var StateHandler = $injector.get('StateHandler');
+    var SessionService = $injector.get('SessionService');
+
+    $scope.iteClicked = function () {
+
+    }
+    
+    $scope.sessionService = SessionService;
+    $scope.sidePanelArray = [];
+    if(SessionService.getSignedInUser() == undefined){
+        $scope.sidePanelArray = [
+            {
+                outlinedTex : "Login"
+            },
+            {
+                outlinedTex : "Register"
+            }
+        ];
+    } else {
+        $scope.sidePanelArray = [
+            {
+                outlinedTex : SessionService.getSignedInUser().getFullName()
+            },
+            {
+                outlinedTex : "Logout"
+            }
+        ];
+    }
+
+    
+
 
     $rootScope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams){
@@ -58,5 +88,12 @@ function bootCtrlConstructor($scope, $injector){
     };
 
     $state.go('index');
+
+    $scope.onLogoffClicked = function (index) {
+        console.log("IAM clicked at "+ index)
+    }
+
+
+
 
 }
