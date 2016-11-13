@@ -7,6 +7,7 @@ function sessionServiceConstructor($injector){
     var User = $injector.get('User');
     var $http = $injector.get('$http');
     var $state = $injector.get('$state');
+    var $mdToast = $injector.get('$mdToast');
 
     var service = {};
 
@@ -48,7 +49,8 @@ function sessionServiceConstructor($injector){
     service.logout = function() {
         $http.get('/logout')
             .success(function () {
-               service.removeSignedInUser();
+                service.removeSignedInUser();
+                $mdToast.show($mdToast.simple().content('Successfully logged out'));
                 $state.go('index');
             });
     };

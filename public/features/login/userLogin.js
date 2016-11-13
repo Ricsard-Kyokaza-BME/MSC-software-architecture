@@ -18,7 +18,8 @@ function userLoginCtrlConstructor($injector){
             .success(function(data) {
                 $state.go(StateHandler.getPreviousStateName());
                 SessionService.put(data.user);
-                $mdToast.show($mdToast.simple().content('Successful login'));
+                $mdToast.show($mdToast.simple()
+                    .content('Successfully logged in as ' + SessionService.getSignedInUser().getFullName()));
             })
             .error(function(err) {
                 $mdToast.show($mdToast.simple().content('Login failed'));

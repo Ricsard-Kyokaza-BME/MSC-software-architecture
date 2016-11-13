@@ -23,6 +23,7 @@ function userRegistrationCtrlConstructor($injector){
             })
             .error(function(err) {
                 $mdToast.show($mdToast.simple().content('FAILED'));
+                console.log(err);
             });
     };
 
