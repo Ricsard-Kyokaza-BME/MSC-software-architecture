@@ -33,9 +33,17 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         controller: 'UserRegistrationCtrl as userRegistration'
     };
 
+    var hotelAdministration = {
+        name: 'hotels',
+        url: '/hotels',
+        templateUrl: "/features/hotelAdministration/hotels.html",
+        controller: 'HotelAdminCtrl as hotelAdminCtrl'
+    };
+
     $stateProvider.state(indexState);
     $stateProvider.state(loginState);
     $stateProvider.state(userRegistrationState);
+    $stateProvider.state(hotelAdministration);
 });
 
 
@@ -47,6 +55,8 @@ function bootCtrlConstructor($scope, $injector){
     var $rootScope = $injector.get('$rootScope');
     var StateHandler = $injector.get('StateHandler');
     var SessionService = $injector.get('SessionService');
+
+    $scope.SessionService = SessionService;
 
     $state.go('index');
 

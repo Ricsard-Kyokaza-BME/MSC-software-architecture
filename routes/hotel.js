@@ -16,6 +16,17 @@ router.get('/', function(req, res, next) {
     });
 });
 
+/* GET list all hotel. */
+router.get('/own', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
+    Hotel.find({owner: req.user._id}, function(err,docs){
+        if (err){
+            commons.sendError(req, res, 'Error in getting hotels', err);
+        } else {
+            res.json({results: docs});
+        }
+    });
+});
+
 /* POST create a hotel. */
 router.post('/', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
     Room.create(req.body.rooms, function (err, rooms) {
