@@ -1,5 +1,13 @@
 var app = angular.module('HotelReservation');
-app.controller('UserLoginController', function($http, $mdToast, $mdDialog){
+
+app.controller('UserLoginCtrl', userLoginCtrlConstructor);
+userLoginCtrlConstructor.$inject = ['$injector'];
+
+function userLoginCtrlConstructor($injector){
+    var $http = $injector.get('$http');
+    var $mdToast = $injector.get('$mdToast');
+    var $mdDialog = $injector.get('$mdDialog');
+
     var vm = this;
     vm.user = {};
     vm.user.hotels = [];
@@ -25,4 +33,4 @@ app.controller('UserLoginController', function($http, $mdToast, $mdDialog){
         }
     };
 
-});
+}

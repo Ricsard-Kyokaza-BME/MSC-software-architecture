@@ -22,42 +22,63 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     var loginState = {
         name: 'login',
         url: '/login',
-        onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
-            $mdDialog.show({
-                clickOutsideToClose: true,
-                templateUrl: '/features/login/login.html',
-                controller: 'UserLoginController as userLogin',
-                onComplete: function () {
-                    $state.go('index');
-                }
-            });
-        }]
+        templateUrl: '/features/login/login.html',
+        controller: 'UserLoginCtrl as userLogin'
+        // onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
+        //     $mdDialog.show({
+        //         clickOutsideToClose: true,
+        //         templateUrl: '/features/login/login.html',
+        //         controller: 'UserLoginCtrl as userLogin',
+        //         onComplete: function () {
+        //             $state.go('index');
+        //         }
+        //     });
+        // }]
     };
 
     var userRegistrationState = {
-        name: 'userRegistration',
+        name: 'registration',
         url: '/registration',
-        onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
-            $mdDialog.show({
-                clickOutsideToClose: true,
-                templateUrl: "/features/registration/registration.html",
-                controller: 'UserRegistrationCtrl as userRegistration',
-                onComplete: function () {
-                    $state.go('index');
-                }
-            });
-        }]
+        templateUrl: "/features/registration/registration.html",
+        controller: 'UserRegistrationCtrl as userRegistration'
+        // onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
+        //     $mdDialog.show({
+        //         clickOutsideToClose: true,
+        //         templateUrl: "/features/registration/registration.html",
+        //         controller: 'UserRegistrationCtrl as userRegistration',
+        //         onComplete: function () {
+        //             $state.go('index');
+        //         }
+        //     });
+        // }]
     };
 
     $stateProvider.state(indexState);
     $stateProvider.state(loginState);
     $stateProvider.state(userRegistrationState);
 });
-app.controller('BootCtrl', function($scope, $state, $rootScope){
-    $state.go('index');
+
+
+app.controller('BootCtrl', bootCtrlConstructor);
+bootCtrlConstructor.$inject = ['$scope', '$injector'];
+
+function bootCtrlConstructor($scope, $injector){
+    var $state = $injector.get('$state');
+    var $rootScope = $injector.get('$rootScope');
+    var StateHandler = $injector.get('StateHandler');
+
+    $scope.StateHandler = StateHandler;
 
     $rootScope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams){
-            $scope.currentNavItem = toState.name;
+            StateHandler.setPreviousState(fromState);
+            StateHandler.setCurrentState(toState);
         });
-});
+
+    $scope.getCurrentStateName = function () {
+        return StateHandler.getCurrentStateName();
+    };
+
+    $state.go('index');
+
+}
