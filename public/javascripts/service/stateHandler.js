@@ -22,7 +22,7 @@ function stateHandlerConstructor($injector){
     }
 
     function setCurrentState(state) {
-        currentState = state;
+        currentState = angular.copy(state);
     }
 
     function getPreviousState() {
@@ -30,7 +30,7 @@ function stateHandlerConstructor($injector){
     }
 
     function setPreviousState(state) {
-        previousState = state;
+        previousState = angular.copy(state);
     }
 
     function getCurrentStateName() {

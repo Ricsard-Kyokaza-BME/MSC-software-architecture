@@ -47,16 +47,14 @@ function bootCtrlConstructor($scope, $injector){
     var $rootScope = $injector.get('$rootScope');
     var StateHandler = $injector.get('StateHandler');
 
-    $scope.StateHandler = StateHandler;
-
     $rootScope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams){
             StateHandler.setPreviousState(fromState);
             StateHandler.setCurrentState(toState);
         });
 
-    $scope.getCurrentStateName = function () {
-        return StateHandler.getCurrentStateName();
+    $scope.getCurrentState = function () {
+        return StateHandler.getCurrentState();
     };
 
     $state.go('index');
