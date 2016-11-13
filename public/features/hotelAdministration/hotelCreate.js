@@ -49,10 +49,14 @@ function userLoginCtrlConstructor($scope, $injector){
     };
 
     vm.uploadImages = function (hotelID) {
+        console.log(vm.images);
         Upload.upload({
             url: '/hotel/' + hotelID + '/image',
             method: 'POST',
-            file: vm.images
+            arrayKey: '',
+            data: {
+                images: vm.images
+            }
         }).then(function (resp) {
             console.log('Images upload successful');
             console.log(resp);

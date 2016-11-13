@@ -97,7 +97,7 @@ router.get('/:id/image/:imageId', commons.isAuthenticated, commons.hasHostLevel,
 });
 
 /* POST add hotel image. */
-router.post('/:id/image', commons.isAuthenticated, commons.hasHostLevel, imageUpload.array('file'), function(req, res, next) {
+router.post('/:id/image', commons.isAuthenticated, commons.hasHostLevel, imageUpload.array('images'), function(req, res, next) {
     var fileNames = [];
     for(var i = 0; i < req.files.length; i++) {
         fileNames.push(req.files[i].filename);
