@@ -8,20 +8,20 @@
             </div>
         </md-toolbar>
         <md-card-content>
-            <form name="registerForm" ng-submit="sendLogin()">
+            <form name="registerForm" ng-submit="userLogin.sendLogin()">
                 <div layout-gt-sm="row">
                     <md-input-container>
                         <label>Username</label>
-                        <input type="text" name="username" ng-model="loginObj.username" required>
+                        <input type="text" name="username" ng-model="userLogin.loginObj.username" required>
                     </md-input-container>
                     <md-input-container>
                         <label>Password</label>
-                        <input type="password" name="password" ng-model="loginObj.password" required>
+                        <input type="password" name="password" ng-model="userLogin.loginObj.password" required>
                     </md-input-container>
                 </div>
                 <div layout-gt-sm="row">
                     <input class="md-button" type="submit" value="Login" />
-                    <input class="md-button" ng-click="goToRegister()" value="Register" />
+                    <input class="md-button" ng-click="userLogin.goToRegister()" value="Register" />
                 </div>
             </form>
         </md-card-content>

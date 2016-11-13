@@ -5,32 +5,32 @@ userLoginCtrlConstructor.$inject = ['$injector'];
 
 function userLoginCtrlConstructor($injector){
     var $http = $injector.get('$http');
-    var $mdToast = $injector.get('$mdToast');
-    var $mdDialog = $injector.get('$mdDialog');
+    var SessionService = $injector.get('SessionService');
+    var $state = $injector.get('$state');
+    var StateHandler = $injector.get('StateHandler');
+
 
     var vm = this;
-    vm.user = {};
-    vm.user.hotels = [];
-    vm.user.role = 'guest';
 
-    vm.registerUser = function() {
-        $http.post('/registration', vm.user)
+    vm.loginObj = {};
+
+    vm.sendLogin = function() {
+        console.log("LOGIN");
+        console.log(vm.loginObj);
+
+        $http.post('/login', vm.loginObj)
             .success(function(data) {
-                $mdToast.show($mdToast.simple().content('SUCCESS'));
-                $mdDialog.hide();
+                console.log(data);
+                $state.go(StateHandler.getPreviousStateName());
+                SessionService.put(data.user);
             })
             .error(function(err) {
-                $mdToast.show($mdToast.simple().content('FAILED'));
-                $mdDialog.hide();
+                console.log(err);
             })
     };
 
-    vm.roleOnChange = function (it) {
-        if(it) {
-            vm.user.role = 'guest';
-        } else {
-            vm.user.role = 'host';
-        }
+    vm.goToRegister = function () {
+        $state.go('registration');
     };
 
 }
