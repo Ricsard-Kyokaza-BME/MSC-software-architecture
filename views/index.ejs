@@ -7,8 +7,8 @@
       <!--<md-content class="md-padding" layout-xs="column" layout="row">-->
         <md-nav-bar md-selected-nav-item="getCurrentState().name" layout-xs="column" layout="row" nav-bar-aria-label="navigation links">
           <md-nav-item md-nav-href="#/" name="index">Browse</md-nav-item>
-          <md-nav-item md-nav-href="#/registration" name="registration">Registration</md-nav-item>
-          <md-nav-item md-nav-href="#/login" name="login">Login</md-nav-item>
+          <!--<md-nav-item md-nav-href="#/registration" name="registration">Registration</md-nav-item>-->
+          <!--<md-nav-item md-nav-href="#/login" name="login">Login</md-nav-item>-->
         </md-nav-bar>
       <!--</md-content>-->
       <md-menu md-position-mode="target-right target" >
@@ -16,10 +16,10 @@
           <md-icon class="material-icons">face</md-icon>
         </md-button>
         <md-menu-content width="4" >
-          <md-menu-item ng-repeat="item in sidePanelArray">
-            <md-button ng-disabled="$first && sidePanelArray[0].outlinedTex != 'Login'" ng-click="item.onItemClicked($index)">
+          <md-menu-item ng-repeat="item in [1, 2]">
+            <md-button ng-disabled="$first && getSidePanelText($index) != 'Login'" ng-click="getSidePanelClickHandler($index)">
               <div layout="row" flex>
-                <p flex>{{item.outlinedTex}}</p>
+                <p flex>{{getSidePanelText($index)}}</p>
               </div>
               <md-divider ng-if="$first"></md-divider>
             </md-button>

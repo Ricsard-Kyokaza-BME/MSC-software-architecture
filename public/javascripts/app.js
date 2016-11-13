@@ -48,34 +48,29 @@ function bootCtrlConstructor($scope, $injector){
     var StateHandler = $injector.get('StateHandler');
     var SessionService = $injector.get('SessionService');
 
-    $scope.iteClicked = function () {
+    $state.go('index');
 
-    }
-    
-    $scope.sessionService = SessionService;
-    $scope.sidePanelArray = [];
-    if(SessionService.getSignedInUser() == undefined){
-        $scope.sidePanelArray = [
-            {
-                outlinedTex : "Login"
-            },
-            {
-                outlinedTex : "Register"
-            }
-        ];
-    } else {
-        $scope.sidePanelArray = [
-            {
-                outlinedTex : SessionService.getSignedInUser().getFullName()
-            },
-            {
-                outlinedTex : "Logout"
-            }
-        ];
-    }
+    $scope.getSidePanelText = function(index) {
+        switch (index) {
+            case 0:
+                return SessionService.getSignedInUser() ?  SessionService.getSignedInUser().getFullName() : 'Login';
+                break;
+            case 1:
+                return SessionService.getSignedInUser() ?  'Logout' : 'Register';
+                break;
+        }
+    };
 
-    
-
+    $scope.getSidePanelClickHandler = function(index) {
+        switch (index) {
+            case 0:
+                return SessionService.getSignedInUser() ?  '' : $state.go('login');
+                break;
+            case 1:
+                SessionService.getSignedInUser() ?  SessionService.logout() : $state.go('registration');
+                break;
+        }
+    };
 
     $rootScope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams){
@@ -86,14 +81,5 @@ function bootCtrlConstructor($scope, $injector){
     $scope.getCurrentState = function () {
         return StateHandler.getCurrentState();
     };
-
-    $state.go('index');
-
-    $scope.onLogoffClicked = function (index) {
-        console.log("IAM clicked at "+ index)
-    }
-
-
-
 
 }

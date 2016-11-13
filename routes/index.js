@@ -23,8 +23,11 @@ module.exports = function(passport){
 
   /* Handle Logout */
   router.get('/logout', function(req, res) {
-    req.logout();
-    res.json({page: '/'});
+    req.logOut();
+    res.clearCookie('connect.sid', {path: '/'});
+    req.session.destroy(function (err) {
+      res.json({page: '/'});
+    });
   });
 
   /* GET Registration Page */

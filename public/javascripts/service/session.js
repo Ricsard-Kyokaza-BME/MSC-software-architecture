@@ -1,5 +1,5 @@
 var app = angular.module('HotelReservation');
-app.service('SessionService', function(User){
+app.service('SessionService', function(User, $http){
 
     var service = {};
 
@@ -36,6 +36,13 @@ app.service('SessionService', function(User){
      */
     service.removeSignedInUser = function() {
         delete sessionStorage.user;
+    };
+
+    service.logout = function() {
+        $http.get('/logout')
+            .success(function () {
+               service.removeSignedInUser();
+            });
     };
 
     return service;
