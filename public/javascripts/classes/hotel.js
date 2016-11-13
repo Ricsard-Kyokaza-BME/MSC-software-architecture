@@ -5,17 +5,19 @@ app.factory( "Hotel", function() {
      * @param {string} id
      * @param {string} name
      * @param {string} owner
+     * @param {string} description
      * @param {string} location
      * @param {number} luxuryLevel
      * @param {[Review]} reviews
      * @param {[Room]} rooms
      * @constructor
      */
-    function Hotel( id, name, owner, location, luxuryLevel, reviews, rooms ) {
+    function Hotel( id, name, owner, description, location, luxuryLevel, reviews, rooms ) {
         if(id != undefined) {
             this.id = id;
             this.name = name;
             this.owner = owner;
+            this.description = description;
             this.location = location;
             this.luxuryLevel = luxuryLevel;
             this.reviews = reviews;
@@ -24,6 +26,7 @@ app.factory( "Hotel", function() {
             this.id = '';
             this.name = '';
             this.owner = '';
+            this.description = '';
             this.location = '';
             this.luxuryLevel = 0;
             this.reviews = [];

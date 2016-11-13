@@ -1,5 +1,12 @@
 var app = angular.module('HotelReservation');
-app.service('SessionService', function(User, $http){
+
+app.service('SessionService', sessionServiceConstructor);
+sessionServiceConstructor.$inject = ['$injector'];
+
+function sessionServiceConstructor($injector){
+    var User = $injector.get('User');
+    var $http = $injector.get('$http');
+    var $state = $injector.get('$state');
 
     var service = {};
 
@@ -42,9 +49,9 @@ app.service('SessionService', function(User, $http){
         $http.get('/logout')
             .success(function () {
                service.removeSignedInUser();
+                $state.go('index');
             });
     };
 
     return service;
-
-});
+}
