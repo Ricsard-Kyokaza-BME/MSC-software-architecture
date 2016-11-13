@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var Hotel = require('../models/hotel');
+var Room = require('../models/room');
 var commons = require('../commonFunctions');
 
 /* GET list all hotel. */
@@ -17,14 +18,27 @@ router.get('/', function(req, res, next) {
 
 /* POST create a hotel. */
 router.post('/', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
-    var hotel = new Hotel(req.body);
-    hotel.owner = req.user._id;
-
-    hotel.save(function(err, savedHotel) {
+    Room.create(req.body.rooms, function (err, rooms) {
         if (err){
-            commons.sendError(req, res, 'Error in add hotel', err);
+            commons.sendError(req, res, 'Error in add hotel rooms', err);
         } else {
-            res.json(savedHotel);
+            var roomIds = [];
+
+            for(var i = 0; i < rooms.length; i++) {
+                roomIds.push(rooms[i]._id);
+            }
+
+            req.body.rooms = roomIds;
+            var hotel = new Hotel(req.body);
+            hotel.owner = req.user._id;
+
+            hotel.save(function(err, savedHotel) {
+                if (err){
+                    commons.sendError(req, res, 'Error in add hotel', err);
+                } else {
+                    res.json(savedHotel);
+                }
+            });
         }
     });
 });

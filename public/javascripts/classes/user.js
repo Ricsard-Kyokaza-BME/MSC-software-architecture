@@ -1,7 +1,5 @@
 var app = angular.module('HotelReservation');
 app.factory( "User", function() {
-
-
     /**
      * Constructor
      * @param userId
@@ -50,5 +48,4 @@ app.factory( "User", function() {
     };
 
     return( User );
-
 });
