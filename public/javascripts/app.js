@@ -24,16 +24,6 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         url: '/login',
         templateUrl: '/features/login/login.html',
         controller: 'UserLoginCtrl as userLogin'
-        // onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
-        //     $mdDialog.show({
-        //         clickOutsideToClose: true,
-        //         templateUrl: '/features/login/login.html',
-        //         controller: 'UserLoginCtrl as userLogin',
-        //         onComplete: function () {
-        //             $state.go('index');
-        //         }
-        //     });
-        // }]
     };
 
     var userRegistrationState = {
@@ -41,16 +31,6 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         url: '/registration',
         templateUrl: "/features/registration/registration.html",
         controller: 'UserRegistrationCtrl as userRegistration'
-        // onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
-        //     $mdDialog.show({
-        //         clickOutsideToClose: true,
-        //         templateUrl: "/features/registration/registration.html",
-        //         controller: 'UserRegistrationCtrl as userRegistration',
-        //         onComplete: function () {
-        //             $state.go('index');
-        //         }
-        //     });
-        // }]
     };
 
     $stateProvider.state(indexState);
