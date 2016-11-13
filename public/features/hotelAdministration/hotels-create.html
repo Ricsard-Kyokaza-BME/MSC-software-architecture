@@ -35,27 +35,38 @@
                 </div>
                 <div layout-gt-sm="row" layout-align="start center">
                     <span>Rooms</span>
-                    <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-                        <md-icon class="material-icons" ng-click="hotelCreate.addRoom()">add_circle_outline</md-icon>
-                    </md-button>
+                    <!--<md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">-->
+                        <!--<md-icon class="material-icons" ng-click="hotelCreate.addRoom()">add_circle_outline</md-icon>-->
+                    <!--</md-button>-->
                 </div>
-                <div layout-gt-sm="row" layout-align="start center">
+
+                <div name="addRoom" >
                     <md-input-container>
-                        <input type="text" name="type" placeholder="type" ng-model="hotelCreate.room.type">
+                        <input type="text" name="type" placeholder="type" ng-model="hotelCreate.room.type" >
                     </md-input-container>
                     <md-input-container>
-                        <input type="text" name="description" placeholder="description" ng-model="hotelCreate.room.description">
+                        <input type="text" name="description" placeholder="description" ng-model="hotelCreate.room.description" >
                     </md-input-container>
                     <md-input-container>
-                        <input type="number" name="quantity" placeholder="quantity" ng-model="hotelCreate.room.quantity">
+                        <input type="number" name="quantity" placeholder="quantity" ng-model="hotelCreate.room.quantity" >
                     </md-input-container>
                     <md-input-container>
-                        <input type="number" name="capacity" placeholder="capacity" ng-model="hotelCreate.room.capacity">
+                        <input type="number" name="capacity" placeholder="capacity" ng-model="hotelCreate.room.capacity" >
                     </md-input-container>
-                    <md-button type="submit" class="md-raised md-primary" ng-if="">
+                    <md-button class="md-raised md-primary" ng-click="hotelCreate.createRoom()">
                         Add room
                     </md-button>
                 </div>
+
+
+                <table>
+                    <tr name="createRoomForm" ng-repeat="room in hotelCreate.roomsToAdd">
+                        <td>{{room.type}}</td>
+                        <td>{{room.description}}</td>
+                        <td>{{room.quantity}}</td>
+                        <td>{{room.capacity}}</td>
+                    </tr>
+                </table>
                 <div layout-gt-sm="row">
                     <md-input-container>
                         <md-button class="md-raised md-primary"
