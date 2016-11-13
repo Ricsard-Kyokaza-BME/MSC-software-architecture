@@ -58,4 +58,8 @@ function userLoginCtrlConstructor($injector){
                 console.log(err);
             });
     };
+
+    vm.createNewHotel = function () {
+        $state.go('hotelsCreate');
+    }
 }

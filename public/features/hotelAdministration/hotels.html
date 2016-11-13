@@ -2,6 +2,9 @@
     <button ng-click="hotelAdminCtrl.addHotel()">
         Add hotel
     </button>
+    <md-button class="md-raised md-primary" ng-click="hotelAdminCtrl.createNewHotel()">
+        Create new hotel
+    </md-button>
     <md-card ng-repeat="item in hotelAdminCtrl.myHotels">
         <md-toolbar>
             <div class="md-toolbar-tools">
