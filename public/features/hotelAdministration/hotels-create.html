@@ -36,7 +36,24 @@
                 <div layout-gt-sm="row" layout-align="start center">
                     <span>Rooms</span>
                     <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-                        <md-icon class="material-icons">add_circle_outline</md-icon>
+                        <md-icon class="material-icons" ng-click="hotelCreate.addRoom()">add_circle_outline</md-icon>
+                    </md-button>
+                </div>
+                <div layout-gt-sm="row" layout-align="start center">
+                    <md-input-container>
+                        <input type="text" name="type" placeholder="type" ng-model="hotelCreate.room.type">
+                    </md-input-container>
+                    <md-input-container>
+                        <input type="text" name="description" placeholder="description" ng-model="hotelCreate.room.description">
+                    </md-input-container>
+                    <md-input-container>
+                        <input type="number" name="quantity" placeholder="quantity" ng-model="hotelCreate.room.quantity">
+                    </md-input-container>
+                    <md-input-container>
+                        <input type="number" name="capacity" placeholder="capacity" ng-model="hotelCreate.room.capacity">
+                    </md-input-container>
+                    <md-button type="submit" class="md-raised md-primary" ng-if="">
+                        Add room
                     </md-button>
                 </div>
                 <div layout-gt-sm="row">
