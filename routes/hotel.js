@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 
 var multer = require('multer');
 var mime = require('mime');
@@ -77,8 +78,6 @@ router.post('/', commons.isAuthenticated, commons.hasHostLevel, function(req, re
             });
         }
     });
-
-
 });
 
 /* GET specified hotel. */
