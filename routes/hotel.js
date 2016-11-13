@@ -29,29 +29,42 @@ router.get('/own', commons.isAuthenticated, commons.hasHostLevel, function(req, 
 
 /* POST create a hotel. */
 router.post('/', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
-    Room.create(req.body.rooms, function (err, rooms) {
+    var hotel = new Hotel(req.body);
+    hotel.owner = req.user._id;
+    hotel.rooms = [];
+
+    hotel.save(function(err, savedHotel) {
         if (err){
-            commons.sendError(req, res, 'Error in add hotel rooms', err);
+            commons.sendError(req, res, 'Error in add hotel', err);
         } else {
-            var roomIds = [];
-
-            for(var i = 0; i < rooms.length; i++) {
-                roomIds.push(rooms[i]._id);
+            for(var i = 0; i < req.body.rooms.length; i++) {
+                req.body.rooms[i].hotelId = savedHotel._id;
             }
-
-            req.body.rooms = roomIds;
-            var hotel = new Hotel(req.body);
-            hotel.owner = req.user._id;
-
-            hotel.save(function(err, savedHotel) {
+            Room.create(req.body.rooms, function (err, rooms) {
                 if (err){
-                    commons.sendError(req, res, 'Error in add hotel', err);
+                    commons.sendError(req, res, 'Error in add hotel rooms', err);
                 } else {
-                    res.json(savedHotel);
+                    var roomIds = [];
+
+                    for(var i = 0; i < rooms.length; i++) {
+                        roomIds.push(rooms[i]._id);
+                    }
+
+                    savedHotel.rooms = roomIds;
+
+                    Hotel.findOneAndUpdate({ _id: savedHotel._id }, savedHotel, {new: true}, function(err, updatedHotel) {
+                        if (err){
+                            commons.sendError(req, res, 'Error in update hotel', err);
+                        } else {
+                            res.json(updatedHotel);
+                        }
+                    });
                 }
             });
         }
     });
+
+
 });
 
 /* GET specified hotel. */

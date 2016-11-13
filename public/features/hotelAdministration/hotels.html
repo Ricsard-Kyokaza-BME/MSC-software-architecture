@@ -1,14 +1,20 @@
 <md-content class="md-padding">
+    <button ng-click="hotelAdminCtrl.addHotel()">
+        Add hotel
+    </button>
     <md-card ng-repeat="item in hotelAdminCtrl.myHotels">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>
-                    <span>{{item.text}}</span>
+                    <span>{{item.name}}</span>
                 </h2>
             </div>
         </md-toolbar>
         <md-card-content>
-            Desc
+            {{item.desctiption}}
+            <div ng-click="hotelAdminCtrl.onHotelClicked(item)">
+                katt
+            </div>
         </md-card-content>
     </md-card>
 </md-content>
