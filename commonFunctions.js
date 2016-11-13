@@ -21,8 +21,28 @@ var isAuthenticated = function (req, res, next) {
     res.redirect('/');
 };
 
+var hasGuestLevel = function(req, res, next) {
+    if(req.user.role === 'guest' || req.user.role === 'host') {
+        return next();
+    } else {
+        res.status(401);
+        res.json({error: "Unauthorized for this operation!"})
+    }
+};
+
+var hasHostLevel = function(req, res, next) {
+    if(req.user.role === 'host') {
+        return next();
+    } else {
+        res.status(401);
+        res.json({error: "Unauthorized for this operation!"})
+    }
+};
+
 var functions = {};
 functions.sendError = sendError;
 functions.isAuthenticated = isAuthenticated;
+functions.hasGuestLevel = hasGuestLevel;
+functions.hasHostLevel = hasHostLevel;
 
 module.exports = functions;

@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST create a hotel. */
-router.post('/', commons.isAuthenticated, function(req, res, next) {
+router.post('/', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
     var hotel = new Hotel(req.body);
     hotel.owner = req.user._id;
 
@@ -41,8 +41,8 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* POST update hotel. */
-router.post('/:id', commons.isAuthenticated, function(req, res, next) {
-    Hotel.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, updatedHotel) {
+router.post('/:id', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
+    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body, function(err, updatedHotel) {
         if (err){
             commons.sendError(req, res, 'Error in update hotel', err);
         } else {
@@ -52,8 +52,8 @@ router.post('/:id', commons.isAuthenticated, function(req, res, next) {
 });
 
 /* DELETE specified hotel. */
-router.delete('/:id', commons.isAuthenticated, function(req, res, next) {
-    Hotel.findOneAndRemove({ _id: req.params.id }, function(err, hotel) {
+router.delete('/:id', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
+    Hotel.findOneAndRemove({ _id: req.params.id, owner: req.user._id }, function(err, hotel) {
         if (err){
             console.sendError(req, res, 'Error in removing hotel', err);
         } else {

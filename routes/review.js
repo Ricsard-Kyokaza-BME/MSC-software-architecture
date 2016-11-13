@@ -5,7 +5,7 @@ var Review = require('../models/review');
 var commons = require('../commonFunctions');
 
 /* GET list user's reviews. */
-router.get('/', function(req, res, next) {
+router.get('/', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
     Review.find({owner: req.user._id}, function(err, docs){
         if (err){
             commons.sendError(req, res, 'Error in getting reviews', err);
@@ -15,8 +15,19 @@ router.get('/', function(req, res, next) {
     });
 });
 
+/* GET list hotel's reviews. */
+router.get('/:hotelId', function(req, res, next) {
+    Review.find({hotelId: req.params.hotelId}, function(err, docs){
+        if (err){
+            commons.sendError(req, res, 'Error in getting reviews', err);
+        } else {
+            res.json({results: docs});
+        }
+    });
+});
+
 /* POST create a review. */
-router.post('/', commons.isAuthenticated, function(req, res, next) {
+router.post('/', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
     var review = new Review(req.body);
     review.owner = req.user._id;
     review.date = new Date();
@@ -42,8 +53,8 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* POST update review. */
-router.post('/:id', commons.isAuthenticated, function(req, res, next) {
-    Review.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, updatedReview) {
+router.post('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
+    Review.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body, function(err, updatedReview) {
         if (err){
             commons.sendError(req, res, 'Error in update review', err);
         } else {
@@ -53,8 +64,8 @@ router.post('/:id', commons.isAuthenticated, function(req, res, next) {
 });
 
 /* DELETE specified review. */
-router.delete('/:id', commons.isAuthenticated, function(req, res, next) {
-    Review.findOneAndRemove({ _id: req.params.id }, function(err, review) {
+router.delete('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
+    Review.findOneAndRemove({ _id: req.params.id, owner: req.user._id }, function(err, review) {
         if (err){
             console.sendError(req, res, 'Error in removing review', err);
         } else {
