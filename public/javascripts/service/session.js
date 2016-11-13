@@ -16,8 +16,11 @@ app.service('SessionService', function(User){
      * @returns {User|*}
      */
     service.getSignedInUser = function() {
-        var data = JSON.parse(sessionStorage.user);
-        return new User(data._id, data.firstName, data.lastName, data.username, data.password, data.role, data.hotels);
+        if(sessionStorage.user){
+            var data = JSON.parse(sessionStorage.user);
+            return new User(data._id, data.firstName, data.lastName, data.username, data.password, data.role, data.hotels);
+        }
+        return undefined;
     };
 
     /**
