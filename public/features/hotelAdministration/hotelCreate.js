@@ -15,6 +15,7 @@ function userLoginCtrlConstructor($injector){
     vm.hotel = new Hotel();
     vm.roomsToAdd = [];
     vm.room = new Room();
+    vm.images = [];
 
     vm.createHotel = function () {
         $http.post('/hotel', hotel)
@@ -35,6 +36,10 @@ function userLoginCtrlConstructor($injector){
       if(vm.room.type){
 
       }
+    };
+
+    vm.uploadImages = function () {
+      console.log(vm.images);
     };
 
     vm.cancelCreate = function () {
