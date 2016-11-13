@@ -49,6 +49,10 @@ function userLoginCtrlConstructor($scope, $injector){
       console.log(vm.images);
     };
 
+    vm.deleteImage = function (image) {
+        vm.images.splice(vm.images.indexOf(image), 1);
+    };
+
     vm.cancelCreate = function () {
         $state.go(StateHandler.getPreviousStateName());
     }

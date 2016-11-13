@@ -8,7 +8,7 @@
             </div>
         </md-toolbar>
         <md-card-content>
-            <form name="createHotelForm" ng-submit="hotelCreate.createHotel()">
+            <form name="createHotelForm" ng-submit="hotelCreate.createHotel()" flex="100">
                 <div layout-gt-sm="row">
                     <md-input-container>
                         <label>Name</label>
@@ -87,6 +87,31 @@
                             </md-list-item>
                         </md-list>
                     </md-input-container>
+                <div layout-gt-sm="column" flex="50">
+                    <div layout-gt-sm="row" flex="100">
+                        <md-subheader flex="100">Images</md-subheader>
+                    </div>
+                    <div layout-gt-sm="row" flex="100">
+                        <md-input-container ng-if="hotelCreate.images.length > 0" flex="100">
+                            <md-list>
+                                <md-list-item ng-repeat="image in hotelCreate.images">
+                                    <span class="flex">{{image.name}}</span>
+                                    <md-button class="material-icons" ng-click="hotelCreate.deleteImage(image)">delete</md-button>
+                                </md-list-item>
+                            </md-list>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-sm="row">
+                        <md-input-container>
+                            <md-button class="md-raised md-primary"
+                                       type="file"
+                                       name="imageSelect"
+                                       ngf-select ngf-multiple="true" ngf-select ng-model="hotelCreate.images">Select images</md-button>
+                        </md-input-container>
+                        <md-input-container>
+                            <span class="md-button md-raised md-warn" ng-click="hotelCreate.uploadImages()">Upload</span>
+                        </md-input-container>
+                    </div>
                 </div>
                 <div layout-gt-sm="row">
                     <md-button type="submit" class="md-raised md-primary">Create</md-button>
