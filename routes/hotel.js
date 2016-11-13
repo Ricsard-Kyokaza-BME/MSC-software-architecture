@@ -1,9 +1,23 @@
 var express = require('express');
 var router = express.Router();
 
+var multer = require('multer');
+var mime = require('mime');
+var shortid = require('shortid');
+
 var Hotel = require('../models/hotel');
 var Room = require('../models/room');
 var commons = require('../commonFunctions');
+
+var imageStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './upload/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, shortid.generate() + '.' + mime.extension(file.mimetype));
+    }
+});
+var imageUpload = multer({ storage: imageStorage });
 
 /* GET list all hotel. */
 router.get('/', function(req, res, next) {
@@ -74,6 +88,27 @@ router.get('/:id', function(req, res, next) {
             commons.sendError(req, res, 'Error in getting hotel', err);
         } else {
             res.json(hotel);
+        }
+    });
+});
+
+/* GET hotel image. */
+router.get('/:id/image/:imageId', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
+    res.sendFile(path.join(__dirname, '../upload', req.params.imageId));
+});
+
+/* POST add hotel image. */
+router.post('/:id/image', commons.isAuthenticated, commons.hasHostLevel, imageUpload.array('images'), function(req, res, next) {
+    var fileNames = [];
+    for(var i = 0; i < req.files.length; i++) {
+        fileNames.push(req.files[i].filename);
+    }
+
+    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, {images: fileNames}, function(err, updatedHotel) {
+        if (err){
+            commons.sendError(req, res, 'Error in update hotel', err);
+        } else {
+            res.json(updatedHotel);
         }
     });
 });

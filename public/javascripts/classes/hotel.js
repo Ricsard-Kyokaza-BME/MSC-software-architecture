@@ -10,9 +10,10 @@ app.factory( "Hotel", function() {
      * @param {number} luxuryLevel
      * @param {[Review]} reviews
      * @param {[Room]} rooms
+     * @param {[string]} images
      * @constructor
      */
-    function Hotel( id, name, owner, description, location, luxuryLevel, reviews, rooms ) {
+    function Hotel( id, name, owner, description, location, luxuryLevel, reviews, rooms, images ) {
         this.id = id || '';
         this.name = name || '';
         this.owner = owner || '';
@@ -21,6 +22,7 @@ app.factory( "Hotel", function() {
         this.luxuryLevel = luxuryLevel || 1;
         this.reviews = reviews || [];
         this.rooms = rooms || [];
+        this.images = images || [];
     }
 
     /**

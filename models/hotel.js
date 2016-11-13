@@ -7,5 +7,6 @@ module.exports = mongoose.model('Hotel',{
     location:      String,
     luxuryLevel:   Number,
     reviews:       [String],
-    rooms:         [String]
+    rooms:         [String],
+    images:        [String]
 });
