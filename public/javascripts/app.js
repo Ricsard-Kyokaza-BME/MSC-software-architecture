@@ -25,7 +25,7 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
             $mdDialog.show({
                 clickOutsideToClose: true,
-                templateUrl: '/views/login.html',
+                templateUrl: '/features/login/login.html',
                 controller: 'UserLoginController as userLogin',
                 onComplete: function () {
                     $state.go('index');
@@ -40,7 +40,7 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
             $mdDialog.show({
                 clickOutsideToClose: true,
-                templateUrl: "/views/registration.html",
+                templateUrl: "/features/registration/registration.html",
                 controller: 'UserRegistrationCtrl as userRegistration',
                 onComplete: function () {
                     $state.go('index');
