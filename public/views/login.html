@@ -1,0 +1,29 @@
+<md-content class="md-padding">
+    <md-card>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span>Login</span>
+                </h2>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+            <form name="registerForm" ng-submit="sendLogin()">
+                <div layout-gt-sm="row">
+                    <md-input-container>
+                        <label>Username</label>
+                        <input type="text" name="username" ng-model="loginObj.username" required>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Password</label>
+                        <input type="password" name="password" ng-model="loginObj.password" required>
+                    </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                    <input class="md-button" type="submit" value="Login" />
+                    <input class="md-button" ng-click="goToRegister()" value="Register" />
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>

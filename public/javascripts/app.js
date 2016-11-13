@@ -1,10 +1,17 @@
 var app = angular.module('HotelReservation', ['ui.router', 'ui.bootstrap', 'ngFileUpload', 'ngMaterial']);
 app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     $mdIconProvider.fontSet('md', 'material-icons');
-    $mdThemingProvider.theme('default')
+    $mdThemingProvider
+        .theme('default')
         .dark()
+        // .backgroundPalette('grey', {
+        //     'default': '800',
+        //     'hue-1': '400', // use shade 100 for the <code>md-hue-1</code> class
+        //     'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+        //     'hue-3': 'A100'
+        // })
         .primaryPalette('teal')
-        .accentPalette('cyan');
+        .accentPalette('green');
 
     var indexState = {
         name: 'index',
@@ -15,8 +22,16 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     var loginState = {
         name: 'login',
         url: '/login',
-        templateUrl: '/views/login.html',
-        controller: 'UserLoginController as userLoginController'
+        onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
+            $mdDialog.show({
+                clickOutsideToClose: true,
+                templateUrl: '/views/login.html',
+                controller: 'UserLoginController as userLogin',
+                onComplete: function () {
+                    $state.go('index');
+                }
+            });
+        }]
     };
 
     var userRegistrationState = {
