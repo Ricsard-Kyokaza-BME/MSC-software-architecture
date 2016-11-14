@@ -11,10 +11,11 @@ function userLoginCtrlConstructor($injector){
     var Hotel = $injector.get('Hotel');
     var Room = $injector.get('Room');
 
-
     var vm = this;
 
     vm.myHotels = [];
+    vm.sliders = {};
+    vm.actualSlides = {};
 
     $http.get('/hotel/own')
         .success(function(data) {
