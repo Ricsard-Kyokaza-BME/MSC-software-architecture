@@ -33,35 +33,48 @@
                 <div layout-gt-sm="row">
                     <md-input-container>
                         <label>Description</label>
-                        <textarea type="text" rows="5" name="description" ng-model="hotelCreate.hotel.description" required></textarea>
+                        <textarea type="text" rows="2" name="description" ng-model="hotelCreate.hotel.description" required></textarea>
                     </md-input-container>
                 </div>
                 <div layout-gt-sm="row" flex="50">
                     <md-subheader flex="100">Rooms</md-subheader>
                 </div>
 
-                <div name="addRoom" >
+                <div layout-gt-sm="row" layout-align="start center">
                     <md-input-container>
-                        <input type="text" name="type" placeholder="type" ng-model="hotelCreate.room.type" >
+                        <input type="text" name="type" placeholder="Type" ng-model="hotelCreate.room.type" >
                     </md-input-container>
                     <md-input-container>
-                        <input type="text" name="description" placeholder="description" ng-model="hotelCreate.room.description" >
+                        <input type="text" name="description" placeholder="Description" ng-model="hotelCreate.room.description" >
                     </md-input-container>
                     <md-input-container>
-                        <input type="number" name="quantity" placeholder="quantity" ng-model="hotelCreate.room.quantity" >
+                        <input type="number" name="quantity" placeholder="Quantity" ng-model="hotelCreate.room.quantity" >
                     </md-input-container>
                     <md-input-container>
-                        <input type="number" name="capacity" placeholder="capacity" ng-model="hotelCreate.room.capacity" >
+                        <input type="number" name="capacity" placeholder="Capacity" ng-model="hotelCreate.room.capacity" >
                     </md-input-container>
-                    <md-button class="md-raised md-primary" ng-click="hotelCreate.createRoom()">
-                        Add room
-                    </md-button>
+                    <md-input-container>
+                        <md-button class="md-raised md-primary" ng-click="hotelCreate.createRoom()">
+                            Add room
+                        </md-button>
+                    </md-input-container>
                 </div>
-                <div name="createRoomForm"  ng-repeat="room in hotelCreate.roomsToAdd">
-                    <label>{{room.type}}</label>
-                    <label>{{room.description}}</label>
-                    <label>{{room.quantity}}</label>
-                    <label>{{room.capacity}}</label>
+                <div ng-repeat="room in hotelCreate.roomsToAdd" layout-gt-sm="row" layout-align="start center">
+                    <md-input-container>
+                        <input type="text" ng-model="room.type" ng-disabled="true">
+                    </md-input-container>
+                    <md-input-container>
+                        <input type="text" ng-model="room.description" ng-disabled="true">
+                    </md-input-container>
+                    <md-input-container>
+                        <input type="number" ng-model="room.quantity" ng-disabled="true">
+                    </md-input-container>
+                    <md-input-container>
+                        <input type="number" ng-model="room.capacity" ng-disabled="true">
+                    </md-input-container>
+                    <md-input-container>
+                        <md-button class="material-icons" ng-click="hotelCreate.deleteRoom(room)">delete</md-button>
+                    </md-input-container>
                 </div>
                 <div layout-gt-sm="column" flex="50">
                     <div layout-gt-sm="row" flex="100">
@@ -78,14 +91,12 @@
                         </md-input-container>
                     </div>
                     <div layout-gt-sm="row">
+                        <md-progress-linear ng-if="hotelCreate.uploadProgress" md-mode="determinate" value="{{hotelCreate.determinateValue}}"></md-progress-linear>
                         <md-input-container>
                             <md-button class="md-raised md-primary"
                                        name="imageSelect"
                                        ngf-multiple="true" ngf-select ng-model="hotelCreate.images">Select images</md-button>
                         </md-input-container>
-                        <!--<md-input-container>-->
-                            <!--<span class="md-button md-raised md-warn" ng-click="hotelCreate.uploadImages()">Upload</span>-->
-                        <!--</md-input-container>-->
                     </div>
                 </div>
                 <div layout-gt-sm="row">

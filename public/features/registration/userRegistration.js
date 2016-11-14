@@ -6,7 +6,6 @@ userRegistrationCtrlConstructor.$inject = ['$injector'];
 function userRegistrationCtrlConstructor($injector){
     var $http = $injector.get('$http');
     var $mdToast = $injector.get('$mdToast');
-    var $mdDialog = $injector.get('$mdDialog');
     var $state = $injector.get('$state');
     var StateHandler = $injector.get('StateHandler');
 

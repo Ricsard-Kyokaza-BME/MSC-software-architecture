@@ -103,7 +103,7 @@ router.post('/:id/image', commons.isAuthenticated, commons.hasHostLevel, imageUp
         fileNames.push(req.files[i].filename);
     }
 
-    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, {images: fileNames}, function(err, updatedHotel) {
+    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, {images: fileNames}, {new: true}, function(err, updatedHotel) {
         if (err){
             commons.sendError(req, res, 'Error in update hotel', err);
         } else {
@@ -114,7 +114,7 @@ router.post('/:id/image', commons.isAuthenticated, commons.hasHostLevel, imageUp
 
 /* POST update hotel. */
 router.post('/:id', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
-    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body, function(err, updatedHotel) {
+    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body, {new: true}, function(err, updatedHotel) {
         if (err){
             commons.sendError(req, res, 'Error in update hotel', err);
         } else {

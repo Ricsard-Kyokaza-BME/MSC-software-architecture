@@ -61,7 +61,7 @@ router.get('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req,
 
 /* POST update reservation. */
 router.post('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
-    Reservation.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body, function(err, updatedReservation) {
+    Reservation.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body, {new: true}, function(err, updatedReservation) {
         if (err){
             commons.sendError(req, res, 'Error in update reservation', err);
         } else {

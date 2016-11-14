@@ -7,15 +7,16 @@ function userLoginCtrlConstructor($scope, $injector){
     var $http = $injector.get('$http');
     var $state = $injector.get('$state');
     var StateHandler = $injector.get('StateHandler');
+    var $mdToast = $injector.get('$mdToast');
     var Hotel = $injector.get('Hotel');
     var Room = $injector.get('Room');
     var Upload = $injector.get('Upload');
 
-
     var vm = this;
+
     vm.hotel = new Hotel();
-    vm.roomsToAdd = [];
     vm.room = new Room();
+    vm.roomsToAdd = [];
     vm.images = [];
 
     vm.createHotel = function () {
@@ -24,25 +25,21 @@ function userLoginCtrlConstructor($scope, $injector){
         });
         $http.post('/hotel', vm.hotel)
             .success(function(data) {
-                console.log(data);
-                $state.go(StateHandler.getPreviousStateName());
+                $mdToast.show($mdToast.simple().content('Hotel created successfully'));
                 vm.uploadImages(data._id);
             })
             .error(function(err) {
+                $mdToast.show($mdToast.simple().content('Failed to create hotel'));
                 console.log(err);
             });
     };
 
-    vm.addRoom = function () {
-
-    };
-
     vm.createRoom = function () {
-        vm.room.type=='' ? $scope.createHotelForm.type.$invalid = true : $scope.createHotelForm.type.$invalid = false;
-        vm.room.description=='' ? $scope.createHotelForm.description.$invalid = true : $scope.createHotelForm.description.$invalid = false;
-        vm.room.capacity==0 ? $scope.createHotelForm.capacity.$invalid = true : $scope.createHotelForm.capacity.$invalid = false;
-        vm.room.quantity==0 ? $scope.createHotelForm.quantity.$invalid = true : $scope.createHotelForm.quantity.$invalid = false;
-        if(vm.room.type!='' && vm.room.description!='' && vm.room.capacity!=0 && vm.room.quantity!=0){
+        vm.room.type == '' ? $scope.createHotelForm.type.$invalid = true : $scope.createHotelForm.type.$invalid = false;
+        vm.room.description == '' ? $scope.createHotelForm.description.$invalid = true : $scope.createHotelForm.description.$invalid = false;
+        vm.room.capacity == 0 ? $scope.createHotelForm.capacity.$invalid = true : $scope.createHotelForm.capacity.$invalid = false;
+        vm.room.quantity == 0 ? $scope.createHotelForm.quantity.$invalid = true : $scope.createHotelForm.quantity.$invalid = false;
+        if(vm.room.type != '' && vm.room.description != '' && vm.room.capacity != 0 && vm.room.quantity != 0) {
             vm.roomsToAdd.push(angular.copy(vm.room));
             vm.room = new Room();
         }
@@ -54,22 +51,26 @@ function userLoginCtrlConstructor($scope, $injector){
             url: '/hotel/' + hotelID + '/image',
             method: 'POST',
             arrayKey: '',
-            data: {
-                images: vm.images
-            }
+            data: { images: vm.images }
         }).then(function (resp) {
-            console.log('Images upload successful');
-            console.log(resp);
+            $mdToast.show($mdToast.simple().content('Images uploaded successfully'));
+            $state.go(StateHandler.getPreviousStateName());
+            vm.uploadProgress = undefined;
         }, function (resp) {
+            $mdToast.show($mdToast.simple().content('Failed to image upload'));
             console.log('Error status: ' + resp.status);
+            vm.uploadProgress = undefined;
         }, function (evt) {
-            // $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
-            // console.log('progress: ' + $scope.uploadProgress + '% ');
+            vm.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
         });
     };
 
     vm.deleteImage = function (image) {
         vm.images.splice(vm.images.indexOf(image), 1);
+    };
+
+    vm.deleteRoom = function (room) {
+        vm.roomsToAdd.splice(vm.roomsToAdd.indexOf(room), 1);
     };
 
     vm.cancelCreate = function () {

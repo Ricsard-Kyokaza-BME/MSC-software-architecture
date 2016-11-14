@@ -54,7 +54,7 @@ router.get('/:id', function(req, res, next) {
 
 /* POST update review. */
 router.post('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
-    Review.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body, function(err, updatedReview) {
+    Review.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body, {new: true}, function(err, updatedReview) {
         if (err){
             commons.sendError(req, res, 'Error in update review', err);
         } else {
