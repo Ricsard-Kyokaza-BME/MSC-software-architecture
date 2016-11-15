@@ -21,7 +21,13 @@ router.get('/:hotelId', function(req, res, next) {
         if (err){
             commons.sendError(req, res, 'Error in getting reviews', err);
         } else {
-            res.json({results: docs});
+            var ratingSum = 0;
+            for(var i = 0; i < docs.length; i++) {
+                ratingSum += docs[i].rating;
+            }
+            var averageRating = (docs.length > 0) ? (ratingSum / docs.length) : 0;
+
+            res.json({averageRating: averageRating,results: docs});
         }
     });
 });

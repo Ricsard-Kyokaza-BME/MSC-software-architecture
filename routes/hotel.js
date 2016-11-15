@@ -20,7 +20,7 @@ var imageStorage = multer.diskStorage({
 });
 var imageUpload = multer({ storage: imageStorage });
 
-/* GET list all hotel. */
+/* GET list all hotels. */
 router.get('/', function(req, res, next) {
     Hotel.find({}, function(err,docs){
         if (err){
@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
     });
 });
 
-/* GET list all hotel. */
+/* GET list own hotels. */
 router.get('/own', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
     Hotel.find({owner: req.user._id}, function(err,docs){
         if (err){
@@ -86,7 +86,10 @@ router.get('/:id', function(req, res, next) {
         if (err){
             commons.sendError(req, res, 'Error in getting hotel', err);
         } else {
-            res.json(hotel);
+            Room.find({hotelId: req.params.id}, function (err, rooms) {
+                hotel.rooms = rooms;
+                res.json(hotel);
+            });
         }
     });
 });
