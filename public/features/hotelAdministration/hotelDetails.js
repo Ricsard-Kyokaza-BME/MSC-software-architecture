@@ -42,10 +42,20 @@ function userLoginCtrlConstructor($injector){
         });
 
     vm.addReservation = function (roomItem) {
-        console.log(roomItem);
-        console.log(vm.datePicker);
-        var reservation = new Reservation();
+        // console.log(roomItem);
+        // console.log(vm.datePicker);
+        var reservation = new Reservation('','',roomItem._id, vm.hotel._id, vm.datePicker.startDate, vm.datePicker.endDate);
 
+
+        $http.post('/reservation', reservation.transformToSend())
+            .success(function(data) {
+                // $mdToast.show($mdToast.simple().content('Reservation done!'));
+                console.log(data);
+            })
+            .error(function(err) {
+                // $mdToast.show($mdToast.simple().content('Failed to create reservation!'));
+                console.log(err);
+            });
     }
 
 }
