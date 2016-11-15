@@ -17,7 +17,13 @@ function userLoginCtrlConstructor($injector){
 
     vm.hotel = {};
 
-    console.log("ALMA");
-    console.log($stateParams.hotelId);
+    $http.get('/hotel/' + $stateParams.hotelId)
+        .success(function(data) {
+            vm.hotel = data;
+            console.log(vm.hotel);
+        })
+        .error(function(err) {
+            console.log(err);
+        });
 
 }
