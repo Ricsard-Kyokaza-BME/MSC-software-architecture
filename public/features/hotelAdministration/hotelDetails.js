@@ -38,4 +38,9 @@ function userLoginCtrlConstructor($injector){
         .error(function(err) {
             console.log(err);
         });
+
+    vm.addReservation = function (roomItem) {
+        console.log(roomItem);
+    }
+
 }

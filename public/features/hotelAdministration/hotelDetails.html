@@ -16,12 +16,25 @@
                 {{hotelDetailsCtrl.hotel.description}}
             </div>
         </md-card-content>
-        <md-card-actions layout="row" layout-align="end center">
-            <md-button>Action 1</md-button>
-            <md-button>Action 2</md-button>
-        </md-card-actions>
+        <!--<md-card-actions layout="row" layout-align="end center">-->
+            <!--<md-button >Addd reservation</md-button>-->
+        <!--</md-card-actions>-->
         <md-card-footer>
-            Card footer
+            <h1>Rooms:</h1>
+            <div ng-repeat="roomItem in hotelDetailsCtrl.hotel.rooms" layout-gt-sm="row" layout-align="start center">
+                <md-input-container>
+                    {{roomItem.type}}
+                </md-input-container>
+                <md-input-container>
+                    {{roomItem.description}}
+                </md-input-container>
+                <md-input-container>
+                    {{roomItem.capacity}}
+                </md-input-container>
+                <md-input-container>
+                    <md-button class="material-icons" ng-click="hotelDetailsCtrl.addReservation(roomItem)">add</md-button>
+                </md-input-container>
+            </div>
         </md-card-footer>
     </md-card>
 </md-content>
