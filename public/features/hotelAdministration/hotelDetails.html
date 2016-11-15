@@ -1,5 +1,27 @@
 <md-content class="md-padding">
-    <!--HotelDetailsCtrl-->
-
-    asdasdasd
+    <!--hotelDetailsCtrl-->
+    <md-card>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span>{{hotelDetailsCtrl.hotel.name}}</span>
+                </h2>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+            <div>
+                <hotel-image-viewer hotel=hotelDetailsCtrl.hotel></hotel-image-viewer>
+            </div>
+            <div>
+                {{hotelDetailsCtrl.hotel.description}}
+            </div>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button>Action 1</md-button>
+            <md-button>Action 2</md-button>
+        </md-card-actions>
+        <md-card-footer>
+            Card footer
+        </md-card-footer>
+    </md-card>
 </md-content>
