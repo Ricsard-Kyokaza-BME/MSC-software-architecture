@@ -8,6 +8,7 @@ node_modules/
 /public/.sass-cache
 
 ### Project related ###
-/upload
+/upload/*
+!.keep
 /public/stylesheets/*.css
 /npm-debug.log
