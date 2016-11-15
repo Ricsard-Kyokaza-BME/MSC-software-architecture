@@ -42,10 +42,14 @@ initPassport(passport);
 var routes = require('./routes/index')(passport);
 var users = require('./routes/users');
 var hotel = require('./routes/hotel');
+var review = require('./routes/review');
+var reservation = require('./routes/reservation');
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/hotel', hotel);
+app.use('/review', review);
+app.use('/reservation', reservation);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

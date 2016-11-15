@@ -9,7 +9,9 @@ function hotelImageViewerConstructor($injector) {
         transclude: false,
         restrict: 'E',
         scope: {
-            hotel: '='
+            hotel: '=',
+            width: '@',
+            height: '@'
         },
         link: function($scope, element, attrs) {
             $scope.index = 0;

@@ -1,64 +1,20 @@
 <md-grid-list
         md-cols-gt-md="4" md-cols="2" md-cols-md="2"
-        md-row-height-gt-md="7:6" md-row-height="6:3"
+        md-row-height-gt-md="6:6" md-row-height="6:3"
         md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px">
 
     <md-grid-tile class="gray"
-                  md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+                  md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1"
+                  ng-repeat="hotel in browse.hotels">
         <md-card>
-            <img src="http://s1.thingpic.com/images/nb/PUSCYKU1mfpJYiZG6B9WDF1R.jpeg" class="md-card-image" alt="Washed Out" style="width: 500px;">
+            <hotel-image-viewer hotel="hotel" width="500px" height="500px"></hotel-image-viewer>
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">Hello world</span>
+                    <span class="md-headline">{{hotel.name}}</span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
-                <p>Hello world</p>
-            </md-card-content>
-        </md-card>
-    </md-grid-tile>
-
-    <md-grid-tile class="green"
-                  md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
-        <md-card>
-            <img src="http://s1.thingpic.com/images/nb/PUSCYKU1mfpJYiZG6B9WDF1R.jpeg" class="md-card-image" alt="Washed Out" style="width: 500px;">
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">Hello world</span>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-content>
-                <p>Hello world</p>
-            </md-card-content>
-        </md-card>
-    </md-grid-tile>
-
-    <md-grid-tile class="yellow"
-                  md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
-        <md-card>
-            <img src="http://s1.thingpic.com/images/nb/PUSCYKU1mfpJYiZG6B9WDF1R.jpeg" class="md-card-image" alt="Washed Out" style="width: 500px;">
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">Hello world</span>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-content>
-                <p>Hello world</p>
-            </md-card-content>
-        </md-card>
-    </md-grid-tile>
-
-    <md-grid-tile class="yellow"
-                  md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
-        <md-card>
-            <img src="http://s1.thingpic.com/images/nb/PUSCYKU1mfpJYiZG6B9WDF1R.jpeg" class="md-card-image" alt="Washed Out" style="width: 500px;">
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">Hello world</span>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-content>
-                <p>Hello world</p>
+                <p>{{hotel.description}}</p>
             </md-card-content>
         </md-card>
     </md-grid-tile>

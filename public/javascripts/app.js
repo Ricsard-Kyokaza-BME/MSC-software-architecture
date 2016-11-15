@@ -16,7 +16,8 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     var indexState = {
         name: 'index',
         url: '/',
-        templateUrl: '/views/index.html'
+        templateUrl: '/views/index.html',
+        controller: 'BrowseCtrl as browse'
     };
 
     var loginState = {

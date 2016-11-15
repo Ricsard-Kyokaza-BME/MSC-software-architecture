@@ -98,7 +98,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 /* GET hotel image. */
-router.get('/:id/image/:imageId', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
+router.get('/:id/image/:imageId', function(req, res, next) {
     res.sendFile(path.join(__dirname, '../upload', req.params.imageId));
 });
 
