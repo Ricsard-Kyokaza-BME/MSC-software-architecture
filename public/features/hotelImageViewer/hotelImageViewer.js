@@ -14,6 +14,7 @@ function hotelImageViewerConstructor($injector) {
             height: '@'
         },
         link: function($scope, element, attrs) {
+            var $state = $injector.get('$state');
             $scope.index = 0;
 
             $scope.nextImage = function () {
@@ -30,6 +31,10 @@ function hotelImageViewerConstructor($injector) {
                 } else {
                     $scope.index--;
                 }
+            };
+
+            $scope.onImageClick = function () {
+                $state.go('hotelsDetails', {hotelId: $scope.hotel._id});
             };
         }
     };

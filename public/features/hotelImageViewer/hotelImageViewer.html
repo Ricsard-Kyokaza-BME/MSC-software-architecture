@@ -1,18 +1,18 @@
-<div style="position: relative">
+<div style="position: relative; text-align: center">
     <div ng-if="hotel.images.length"
          style="position: absolute; left: 0; width: 50px; height: 100%; background-color: rgba(0,0,0,0.3)">
-        <md-button class="md-icon-button" ng-click="previousImage()" style="position: absolute; top: 50%;">
+        <md-button class="md-icon-button" ng-click="previousImage()" style="position: absolute; top: 50%; left: 0">
             <i class="material-icons">keyboard_arrow_left</i>
         </md-button>
     </div>
     <div ng-if="hotel.images.length"
          style="position: absolute; right: 0; width: 50px; height: 100%; background-color: rgba(0,0,0,0.3)">
-        <md-button class="md-icon-button" ng-click="nextImage()" style="position: absolute; top: 50%;">
+        <md-button class="md-icon-button" ng-click="nextImage()" style="position: absolute; top: 50%; right: 0">
             <i class="material-icons">keyboard_arrow_right</i>
         </md-button>
     </div>
     <img style="object-fit: contain;"
          ng-style="{'width': width ? width :'500px', 'height': height ? height : '500px'}"
          src="/static/empty-spaces-logo.jpg"
-         ng-src="/hotel/{{hotel._id}}/image/{{hotel.images[index]}}">
+         ng-src="/hotel/{{hotel._id}}/image/{{hotel.images[index]}}" ng-click="onImageClick()">
 </div>

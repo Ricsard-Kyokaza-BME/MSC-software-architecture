@@ -8,12 +8,12 @@
                   ng-repeat="hotel in browse.hotels">
         <md-card>
             <hotel-image-viewer hotel="hotel" width="500px" height="500px"></hotel-image-viewer>
-            <md-card-title>
+            <md-card-title ng-click="browse.onHotelClicked(hotel)">
                 <md-card-title-text>
                     <span class="md-headline">{{hotel.name}}</span>
                 </md-card-title-text>
             </md-card-title>
-            <md-card-content>
+            <md-card-content ng-click="browse.onHotelClicked(hotel)">
                 <p>{{hotel.description}}</p>
             </md-card-content>
         </md-card>
