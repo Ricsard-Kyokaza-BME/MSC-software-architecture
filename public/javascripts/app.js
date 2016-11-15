@@ -55,12 +55,20 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         controller: 'HotelCreateCtrl as hotelCreate'
     };
 
+    var myReservations = {
+        name: 'myReservations',
+        url: '/reservations',
+        templateUrl: "/features/myReservations/myReservations.html",
+        controller: 'MyReservationCtrl as myReservationCtrl'
+    };
+
     $stateProvider.state(indexState);
     $stateProvider.state(loginState);
     $stateProvider.state(userRegistrationState);
     $stateProvider.state(hotelAdministration);
     $stateProvider.state(hotelDetailedState);
     $stateProvider.state(hotelCreate);
+    $stateProvider.state(myReservations);
 });
 
 

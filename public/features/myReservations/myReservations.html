@@ -1,0 +1,18 @@
+<md-content class="md-padding">
+    <md-card ng-repeat="reservItem in myReservationCtrl.myReservations">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+                    <span>HotelName</span>
+                </h2>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+            <p>From: {{reservItem.startDate | date : "y-MM-dd"}}</p>
+            <p>To: {{reservItem.endDate | date : "y-MM-dd"}}</p>
+        </md-card-content>
+        <!--<md-card-actions layout="row" layout-align="start center">-->
+            <!--<md-button class="md-raised md-primary" ng-click="hotelAdminCtrl.onHotelClicked(item)">View details</md-button>-->
+        <!--</md-card-actions>-->
+    </md-card>
+</md-content>
