@@ -27,6 +27,7 @@ function userLoginCtrlConstructor($injector){
 
     vm.onHotelClicked = function (item) {
         console.log(item);
+        $state.go('hotelsDetails', {hotelId: item._id});
     };
 
     vm.addHotel = function () {

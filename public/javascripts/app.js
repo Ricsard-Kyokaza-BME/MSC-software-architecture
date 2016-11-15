@@ -40,6 +40,13 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         controller: 'HotelAdminCtrl as hotelAdminCtrl'
     };
 
+    var hotelDetailedState = {
+        name: 'hotelsDetails',
+        url: '/hotel/:hotelId',
+        templateUrl: "/features/hotelAdministration/hotelDetails.html",
+        controller: 'HotelDetailsCtrl as hotelDetailsCtrl'
+    };
+
     var hotelCreate = {
         name: 'hotelsCreate',
         url: '/hotels/create',
@@ -51,6 +58,7 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     $stateProvider.state(loginState);
     $stateProvider.state(userRegistrationState);
     $stateProvider.state(hotelAdministration);
+    $stateProvider.state(hotelDetailedState);
     $stateProvider.state(hotelCreate);
 });
 
