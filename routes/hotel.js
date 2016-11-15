@@ -87,6 +87,9 @@ router.get('/:id', function(req, res, next) {
             commons.sendError(req, res, 'Error in getting hotel', err);
         } else {
             Room.find({hotelId: req.params.id}, function (err, rooms) {
+                rooms = rooms.map(function (room) {
+                    return room.toObject();
+                });
                 hotel.rooms = rooms;
                 res.json(hotel);
             });
