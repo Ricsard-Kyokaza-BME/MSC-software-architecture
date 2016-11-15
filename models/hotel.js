@@ -6,6 +6,6 @@ module.exports = mongoose.model('Hotel',{
     description:   String,
     location:      String,
     luxuryLevel:   Number,
-    rooms:         [mongoose.Schema.Types.Mixed],
+    rooms:         [{ type: mongoose.Schema.Types.ObjectId, ref: 'Room' }],
     images:        [String]
 });

@@ -12,6 +12,7 @@ function browseConstructor($injector){
     var vm = this;
 
     vm.hotels = [];
+    vm.search = {};
 
     $http.get('/hotel')
         .success(function(data) {
@@ -26,5 +27,17 @@ function browseConstructor($injector){
         console.log(item);
         $state.go('hotelsDetails', {hotelId: item._id});
     };
+
+    vm.sendSearch = function () {
+        $http.post('/hotel/search', vm.search)
+            .success(function(data) {
+                console.log(data);
+                vm.hotels.length = 0;
+                vm.hotels.push.apply(vm.hotels, data.results);
+            })
+            .error(function(err) {
+                console.log(err);
+            });
+    }
 
 }

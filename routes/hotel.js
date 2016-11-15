@@ -8,6 +8,7 @@ var shortid = require('shortid');
 
 var Hotel = require('../models/hotel');
 var Room = require('../models/room');
+var Reservation = require('../models/reservation');
 var commons = require('../commonFunctions');
 
 var imageStorage = multer.diskStorage({
@@ -40,6 +41,36 @@ router.get('/own', commons.isAuthenticated, commons.hasHostLevel, function(req, 
             res.json({results: docs});
         }
     });
+});
+
+/* POST search hotels. */
+router.post('/search', function(req, res, next) {
+    Hotel.find({ location: { $regex: req.body.city, $options: "i" }})
+        .populate({
+            path: 'rooms',
+            match: { reservations: { $size: 0 }}, //??
+            populate: {
+                path: 'reservations',
+                match: {$and: [
+                    {$or: [
+                        {$and: [{startDate: {$lte: startDate}}, {endDate: {$gte: startDate}}]},
+                        {$and: [{startDate: {$lte: endDate}}, {endDate: {$gte: endDate}}]}
+                    ]},
+                    {$not:
+                        {$or: [{startDate: {$eq: endDate}}, {endDate: {$eq: startDate}}]}
+                    }
+                ]}
+            }
+        }).exec(function(error, docs) {
+            res.json({results: docs});
+        });
+    // Hotel.find({ location: { $regex: req.body.city, $options: "i" }}, function(err,docs){
+    //     if (err){
+    //         commons.sendError(req, res, 'Error in getting hotels', err);
+    //     } else {
+    //         res.json({results: docs});
+    //     }
+    // });
 });
 
 /* POST create a hotel. */

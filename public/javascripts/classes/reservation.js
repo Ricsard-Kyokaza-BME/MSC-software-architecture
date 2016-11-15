@@ -4,16 +4,16 @@ app.factory( "Reservation", function(Room) {
      * Constructor
      * @param {string} id
      * @param {string} owner
-     * @param {string} room
+     * @param {string} roomId
      * @param {string} hotelId
      * @param {Date} startDate
      * @param {Date} endDate
      * @constructor
      */
-    function Reservation( id, owner, room, hotelId, startDate, endDate) {
+    function Reservation( id, owner, roomId, hotelId, startDate, endDate) {
         this.id = id || '';
         this.owner = owner || '';
-        this.room = room || new Room();
+        this.roomId = roomId || '';
         this.hotelId = hotelId || '';
         this.startDate = startDate || new Date();
         this.endDate = endDate || new Date();
