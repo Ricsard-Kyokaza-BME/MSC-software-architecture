@@ -121,8 +121,10 @@ router.get('/:id', function(req, res, next) {
                 rooms = rooms.map(function (room) {
                     return room.toObject();
                 });
-                hotel.rooms = rooms;
-                res.json(hotel);
+                var newHotel = JSON.parse(JSON.stringify(hotel));
+                newHotel.rooms = rooms;
+
+                res.json(newHotel);
             });
         }
     });
