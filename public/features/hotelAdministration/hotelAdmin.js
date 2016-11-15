@@ -37,7 +37,6 @@ function userLoginCtrlConstructor($injector){
             "This is the description",
             "Alma utca location",
             5,
-            "",
             [new Room(
                 undefined,
                 "Standard type",
