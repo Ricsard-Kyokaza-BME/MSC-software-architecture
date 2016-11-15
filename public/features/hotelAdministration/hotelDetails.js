@@ -10,6 +10,7 @@ function userLoginCtrlConstructor($injector){
     var StateHandler = $injector.get('StateHandler');
     var Hotel = $injector.get('Hotel');
     var Room = $injector.get('Room');
+    var Reservation = $injector.get('Reservation');
     var $stateParams = $injector.get('$stateParams');
 
 
@@ -18,6 +19,7 @@ function userLoginCtrlConstructor($injector){
     vm.hotel = {};
     vm.reviews = [];
     vm.revievRating = undefined;
+    vm.datePicker = {};
 
     $http.get('/hotel/' + $stateParams.hotelId)
         .success(function(data) {
@@ -41,6 +43,9 @@ function userLoginCtrlConstructor($injector){
 
     vm.addReservation = function (roomItem) {
         console.log(roomItem);
+        console.log(vm.datePicker);
+        var reservation = new Reservation();
+
     }
 
 }

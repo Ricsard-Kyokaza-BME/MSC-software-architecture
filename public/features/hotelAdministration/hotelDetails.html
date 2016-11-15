@@ -21,6 +21,14 @@
         <!--</md-card-actions>-->
         <md-card-footer>
             <h1>Rooms:</h1>
+            <md-input-container>
+                <label>Start date</label>
+                <md-datepicker ng-model="hotelDetailsCtrl.datePicker.startDate"></md-datepicker>
+            </md-input-container>
+            <md-input-container>
+                <label>End date</label>
+                <md-datepicker ng-model="hotelDetailsCtrl.datePicker.endDate"></md-datepicker>
+            </md-input-container>
             <div ng-repeat="roomItem in hotelDetailsCtrl.hotel.rooms" layout-gt-sm="row" layout-align="start center">
                 <md-input-container>
                     {{roomItem.type}}
