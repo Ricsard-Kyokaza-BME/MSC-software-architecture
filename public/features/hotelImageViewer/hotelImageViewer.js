@@ -34,7 +34,7 @@ function hotelImageViewerConstructor($injector) {
             };
 
             $scope.onImageClick = function () {
-                $state.go('hotelsDetails', {hotelId: $scope.hotel._id});
+                $state.go('hotelsDetails', {hotelId: $scope. hotel._id});
             };
         }
     };
