@@ -12,6 +12,7 @@ function userLoginCtrlConstructor($injector){
     var Room = $injector.get('Room');
     var Reservation = $injector.get('Reservation');
     var $stateParams = $injector.get('$stateParams');
+    var $mdToast = $injector.get('$mdToast');
 
 
     var vm = this;
@@ -49,11 +50,11 @@ function userLoginCtrlConstructor($injector){
 
         $http.post('/reservation', reservation.transformToSend())
             .success(function(data) {
-                // $mdToast.show($mdToast.simple().content('Reservation done!'));
+                $mdToast.show($mdToast.simple().content('Reservation done!'));
                 console.log(data);
             })
             .error(function(err) {
-                // $mdToast.show($mdToast.simple().content('Failed to create reservation!'));
+                $mdToast.show($mdToast.simple().content('Failed to create reservation!'));
                 console.log(err);
             });
     }
