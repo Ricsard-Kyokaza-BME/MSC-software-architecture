@@ -14,14 +14,7 @@
             </div>
         </md-toolbar>
         <md-card-content>
-            <button ng-click="hotelAdminCtrl.sliders[item._id].prev()">Prev Slide</button>
-            <button ng-click="hotelAdminCtrl.sliders[item._id].next()">Next Slide</button>
-
-            <br/>
-
-            <simple-slider slider-instance="hotelAdminCtrl.sliders[item._id]" current-slide="actualslides[item._id]" style="width:400px; height:400px" auto-play="false">
-                <img ng-repeat="image in item.images" ng-src="/hotel/{{item._id}}/image/{{image}}"/>
-            </simple-slider>
+            <hotel-image-viewer hotel="item"></hotel-image-viewer>
             {{item.desctiption}}
             <div ng-click="hotelAdminCtrl.onHotelClicked(item)">
                 katt

@@ -14,8 +14,6 @@ function userLoginCtrlConstructor($injector){
     var vm = this;
 
     vm.myHotels = [];
-    vm.sliders = {};
-    vm.actualSlides = {};
 
     $http.get('/hotel/own')
         .success(function(data) {
@@ -62,5 +60,5 @@ function userLoginCtrlConstructor($injector){
 
     vm.createNewHotel = function () {
         $state.go('hotelsCreate');
-    }
+    };
 }
