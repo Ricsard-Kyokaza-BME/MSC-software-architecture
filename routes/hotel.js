@@ -123,13 +123,30 @@ router.post('/:id/rooms', function(req, res, next) {
         .populate(populateRoomsAlongReservationsBetweenTwoDate(req.body.startDate, req.body.endDate))
         .exec(function(err, hotel){
             if (err){
-                commons.sendError(req, res, 'Error in getting hotel', err);
+                commons.sendError(req, res, 'Error in getting hotel\'s rooms', err);
             } else {
                 var rooms = _.filter(hotel.rooms, function (room) {
                     return room.reservations.length < room.quantity;
                 });
 
                 res.json(rooms);
+            }
+        });
+});
+
+/* DELETE specified room of a specified hotel. */
+router.delete('/:hotelId/room/:roomId', function(req, res, next) {
+    Room
+        .findOneAndRemove({_id: req.params.roomId})
+        .exec(function(err, room){
+            if (err){
+                commons.sendError(req, res, 'Error in getting hotel\'s rooms', err);
+            } else {
+                Reservation.remove({ _id: { $in: rooms.reservations } }, function (err) {
+                    err ? commons.sendError(req, res, 'Error in removing rooms', err) : '';
+                });
+
+                res.json({id: room._id});
             }
         });
 });
@@ -148,7 +165,7 @@ router.post('/:id/image', commons.isAuthenticated, commons.hasHostLevel, imageUp
 
     Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, {$pushAll: {images: fileNames}}, {new: true}, function(err, updatedHotel) {
         if (err){
-            commons.sendError(req, res, 'Error in update hotel', err);
+            commons.sendError(req, res, 'Error in update hotel images', err);
         } else {
             res.json(updatedHotel);
         }
@@ -168,11 +185,25 @@ router.post('/:id', commons.isAuthenticated, commons.hasHostLevel, function(req,
 
 /* DELETE specified hotel. */
 router.delete('/:id', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
-    Hotel.findOneAndRemove({ _id: req.params.id, owner: req.user._id }, function(err, hotel) {
+    Hotel.findOne({ _id: req.params.id, owner: req.user._id })
+        .populate({path: 'rooms'})
+        .exec(function(err, hotel) {
         if (err){
-            console.sendError(req, res, 'Error in removing hotel', err);
+            commons.sendError(req, res, 'Error in finding hotel hotel', err);
         } else {
-            res.json({id: hotel._id});
+            _.each(hotel.rooms, function (room) {
+                Reservation.remove({ _id: { $in: room.reservations } }, function (err) {
+                    err ? commons.sendError(req, res, 'Error in removing reservations', err) : '';
+                });
+            });
+
+            Room.remove({ _id: { $in: hotel.rooms } }, function (err) {
+                err ? commons.sendError(req, res, 'Error in removing rooms', err) : '';
+            });
+
+            hotel.remove(function (err) {
+                err ? commons.sendError(req, res, 'Error in removing hotel', err) : res.json({id: hotel._id});
+            });
         }
     });
 });

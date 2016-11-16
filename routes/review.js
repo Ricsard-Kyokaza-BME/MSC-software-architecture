@@ -73,7 +73,7 @@ router.post('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req
 router.delete('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
     Review.findOneAndRemove({ _id: req.params.id, owner: req.user._id }, function(err, review) {
         if (err){
-            console.sendError(req, res, 'Error in removing review', err);
+            commons.sendError(req, res, 'Error in removing review', err);
         } else {
             res.json({id: review._id});
         }

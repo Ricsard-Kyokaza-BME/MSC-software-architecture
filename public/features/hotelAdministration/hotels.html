@@ -23,5 +23,8 @@
         <md-card-actions layout="row" layout-align="start center">
             <md-button class="md-raised md-primary" ng-click="hotelAdminCtrl.onHotelClicked(item)">View details</md-button>
         </md-card-actions>
+        <md-card-actions layout="row" layout-align="start center">
+            <md-button class="md-raised md-primary" ng-click="hotelAdminCtrl.deleteHotel(item._id)">Delete</md-button>
+        </md-card-actions>
     </md-card>
 </md-content>

@@ -61,4 +61,14 @@ function userLoginCtrlConstructor($injector){
     vm.createNewHotel = function () {
         $state.go('hotelsCreate');
     };
+
+    vm.deleteHotel = function (id) {
+        $http.delete('/hotel/' + id)
+            .success(function(data) {
+                console.log(data);
+            })
+            .error(function(err) {
+                console.log(err);
+            });
+    }
 }

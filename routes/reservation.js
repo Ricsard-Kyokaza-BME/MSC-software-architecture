@@ -90,9 +90,13 @@ router.post('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req
 router.delete('/:id', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
     Reservation.findOneAndRemove({ _id: req.params.id, owner: req.user._id }, function(err, reservation) {
         if (err){
-            console.sendError(req, res, 'Error in removing reservation', err);
+            commons.sendError(req, res, 'Error in removing reservation', err);
         } else {
-            res.json({id: reservation._id});
+            Room.findOneAndUpdate({ _id: reservation.roomId}, { $pull: { reservations: req.params._id } },
+                function (err, doc) {
+                    err ? commons.sendError(req, res, 'Error in removing reservation', err)
+                        : res.json({id: reservation._id});
+                });
         }
     });
 });
