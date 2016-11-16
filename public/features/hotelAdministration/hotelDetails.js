@@ -95,6 +95,7 @@ function userLoginCtrlConstructor($injector){
             .success(function(data) {
                 console.log(data);
                 $mdToast.show($mdToast.simple().content('Review successfully added.'));
+                vm.reviews.push(data);
                 vm.reviewToSend = {};
             })
             .error(function(err) {
@@ -105,6 +106,20 @@ function userLoginCtrlConstructor($injector){
 
     vm.canAddReviewClicked = function () {
         vm.canAddReview = !vm.canAddReview;
+    };
+
+    vm.deleteReview = function (revItem) {
+        console.log(revItem);
+        $http.delete('/review/' + revItem._id)
+            .success(function(data) {
+                console.log(data);
+                _.delete(vm.reviews, function (element) {
+                    return element._id == data.id;
+                });
+            })
+            .error(function(err) {
+                console.log(err);
+            });
     };
 
 }
