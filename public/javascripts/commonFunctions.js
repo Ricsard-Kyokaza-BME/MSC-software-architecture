@@ -2,7 +2,7 @@ _.delete = function(array, criteria) {
 
     function removeElement(array, element){
         if(_.isObject(element)){
-            array.splice(array.indexOf(_.findWhere(array, element)), 1);
+            array.splice(array.indexOf(_.find(array, element)), 1);
         } else {
             array.splice(array.indexOf(element), 1);
         }
