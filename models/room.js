@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('Room',{
-    type:            String,
+    type:            ['STANDARD', 'SUPERIOR', 'DELUXE', 'APARTMENT', 'BRIDAL_SUITE', 'LUXURY_SUITE', 'PRESIDENTAL'],
     description:     String,
     hotelId:         { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' },
     reservations:    [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reservation' }],

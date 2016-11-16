@@ -1,9 +1,9 @@
 var app = angular.module('HotelReservation');
-app.factory( "Room", function() {
+app.factory( "Room", function(RoomType) {
     /**
      * Constructor
      * @param {string} id
-     * @param {string} type
+     * @param {RoomType} type
      * @param {string} description
      * @param {string} hotelId
      * @param {[String]} reservations
@@ -14,7 +14,7 @@ app.factory( "Room", function() {
      */
     function Room( id, type, description, hotelId, reservations, capacity, quantity, price ) {
         this.id = id || '';
-        this.type = type || '';
+        this.type = type || RoomType.STANDARD;
         this.description = description || '';
         this.hotelId = hotelId || '';
         this.reservations = reservations || [];
