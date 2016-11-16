@@ -47,16 +47,38 @@ function userLoginCtrlConstructor($injector){
         // console.log(vm.datePicker);
         var reservation = new Reservation('','',roomItem._id, vm.hotel._id, vm.datePicker.startDate, vm.datePicker.endDate);
 
+        if(vm.validateDates(vm.datePicker.startDate, vm.datePicker.endDate)){
+            $http.post('/reservation', reservation.transformToSend())
+                .success(function(data) {
+                    $mdToast.show($mdToast.simple().content('Reservation done!'));
+                    console.log(data);
+                })
+                .error(function(err) {
+                    $mdToast.show($mdToast.simple().content('Failed to create reservation!'));
+                    console.log(err);
+                    $state.go('login');
+                });
+        }else {
+            $mdToast.show($mdToast.simple().content('Please select a START date and an END date!'));
+        }
+    };
 
-        $http.post('/reservation', reservation.transformToSend())
-            .success(function(data) {
-                $mdToast.show($mdToast.simple().content('Reservation done!'));
-                console.log(data);
-            })
-            .error(function(err) {
-                $mdToast.show($mdToast.simple().content('Failed to create reservation!'));
-                console.log(err);
-            });
-    }
+    vm.validateDates = function (startD, endD) {
+        var currentDate = Date.now();
+
+        if(startD == undefined || endD == undefined){
+            return undefined;
+        }
+
+        if(startD < currentDate || endD < currentDate){
+            return undefined;
+        }
+
+        if(endD < startD){
+            return undefined;
+        }
+
+        return true;
+    };
 
 }
