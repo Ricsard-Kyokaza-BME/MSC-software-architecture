@@ -10,10 +10,14 @@ function userLoginCtrlConstructor($scope, $injector){
     var $mdToast = $injector.get('$mdToast');
     var Hotel = $injector.get('Hotel');
     var Room = $injector.get('Room');
+    var RoomType = $injector.get('RoomType');
     var Upload = $injector.get('Upload');
 
     var vm = this;
 
+    vm.RoomTypeArray = _.map(RoomType, function (element) {
+        return { text: element.replace('_', ' '), value: element };
+    });
     vm.hotel = new Hotel();
     vm.room = new Room();
     vm.roomsToAdd = [];

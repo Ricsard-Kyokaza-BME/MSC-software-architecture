@@ -23,3 +23,7 @@ _.delete = function(array, criteria) {
     }
 
 };
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toLocaleUpperCase() + this.slice(1).toLocaleLowerCase();
+};
