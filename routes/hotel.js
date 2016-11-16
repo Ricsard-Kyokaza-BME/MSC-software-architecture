@@ -5,6 +5,7 @@ var path = require('path');
 var multer = require('multer');
 var mime = require('mime');
 var shortid = require('shortid');
+var _ = require('lodash');
 
 var Hotel = require('../models/hotel');
 var Room = require('../models/room');
@@ -45,32 +46,49 @@ router.get('/own', commons.isAuthenticated, commons.hasHostLevel, function(req, 
 
 /* POST search hotels. */
 router.post('/search', function(req, res, next) {
-    Hotel.find({ location: { $regex: req.body.city, $options: "i" }})
+    Hotel
+        .find({location: { $regex: req.body.city || '', $options: "i" }})
         .populate({
             path: 'rooms',
-            match: { reservations: { $size: 0 }}, //??
             populate: {
                 path: 'reservations',
-                match: {$and: [
-                    {$or: [
-                        {$and: [{startDate: {$lte: startDate}}, {endDate: {$gte: startDate}}]},
-                        {$and: [{startDate: {$lte: endDate}}, {endDate: {$gte: endDate}}]}
-                    ]},
-                    {$not:
-                        {$or: [{startDate: {$eq: endDate}}, {endDate: {$eq: startDate}}]}
-                    }
-                ]}
+                match: {$or: [
+                        {$and: [
+                            {startDate: {$lte: req.body.startDate}},
+                            {endDate: {$gte: req.body.startDate}},
+                            {endDate: {$lte: req.body.endDate}}
+                        ]},
+                        {$and: [
+                            {startDate: {$gte: req.body.startDate}},
+                            {startDate: {$lte: req.body.endDate}},
+                            {endDate: {$gte: req.body.endDate}}
+                        ]},
+                        {$and: [
+                            {startDate: {$gte: req.body.startDate}},
+                            {startDate: {$lte: req.body.endDate}},
+                            {endDate: {$lte: req.body.endDate}},
+                            {endDate: {$gte: req.body.startDate}}
+                        ]},
+                        {$and: [
+                            {startDate: {$lte: req.body.startDate}},
+                            {startDate: {$lte: req.body.endDate}},
+                            {endDate: {$gte: req.body.endDate}},
+                            {endDate: {$gte: req.body.startDate}}
+                        ]}
+                    ]}
             }
-        }).exec(function(error, docs) {
-            res.json({results: docs});
+        })
+        .exec(function(error, docs) {
+            var results = _.filter(docs, function (hotel) {
+                var isThereEmptyReservation = false;
+                _.each(hotel.rooms, function (room) {
+                   room.reservations.length == 0 ? isThereEmptyReservation = true : '';
+                });
+                return isThereEmptyReservation;
+            });
+
+            res.json({results: results});
         });
-    // Hotel.find({ location: { $regex: req.body.city, $options: "i" }}, function(err,docs){
-    //     if (err){
-    //         commons.sendError(req, res, 'Error in getting hotels', err);
-    //     } else {
-    //         res.json({results: docs});
-    //     }
-    // });
 });
 
 /* POST create a hotel. */
@@ -113,19 +131,14 @@ router.post('/', commons.isAuthenticated, commons.hasHostLevel, function(req, re
 
 /* GET specified hotel. */
 router.get('/:id', function(req, res, next) {
-    Hotel.findOne({_id: req.params.id}, function(err, hotel){
+    Hotel
+        .findOne({_id: req.params.id})
+        .populate({ path: 'rooms' })
+        .exec(function(err, hotel){
         if (err){
             commons.sendError(req, res, 'Error in getting hotel', err);
         } else {
-            Room.find({hotelId: req.params.id}, function (err, rooms) {
-                rooms = rooms.map(function (room) {
-                    return room.toObject();
-                });
-                var newHotel = JSON.parse(JSON.stringify(hotel));
-                newHotel.rooms = rooms;
-
-                res.json(newHotel);
-            });
+            res.json(hotel);
         }
     });
 });

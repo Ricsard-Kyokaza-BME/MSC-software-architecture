@@ -3,11 +3,15 @@ var router = express.Router();
 
 var Reservation = require('../models/reservation');
 var Hotel = require('../models/hotel');
+var Room = require('../models/room');
 var commons = require('../commonFunctions');
 
 /* GET list user's reservations. */
 router.get('/', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
-    Reservation.find({owner: req.user._id}, function(err, docs){
+    Reservation
+        .find({owner: req.user._id})
+        .populate({ path: 'hotelId' })
+        .exec(function(err, docs){
         if (err){
             commons.sendError(req, res, 'Error in getting reservations', err);
         } else {
@@ -42,7 +46,14 @@ router.post('/', commons.isAuthenticated, commons.hasGuestLevel, function(req, r
         if (err){
             commons.sendError(req, res, 'Error in add reservation', err);
         } else {
-            res.json(savedReservation);
+            Room.findOneAndUpdate({_id: reservation.roomId}, {$pushAll: {reservations: [savedReservation._id]}}, {new: true},
+                function (err, reservation) {
+                    if(err) {
+                        commons.sendError(req, res, 'Error in add reservation', err);
+                    } else {
+                        res.json(savedReservation);
+                    }
+            })
         }
     });
 });
