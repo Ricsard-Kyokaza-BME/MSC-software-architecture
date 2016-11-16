@@ -155,7 +155,7 @@ router.post('/:id/image', commons.isAuthenticated, commons.hasHostLevel, imageUp
         fileNames.push(req.files[i].filename);
     }
 
-    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, {images: fileNames}, {new: true}, function(err, updatedHotel) {
+    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, {$pushAll: {images: fileNames}}, {new: true}, function(err, updatedHotel) {
         if (err){
             commons.sendError(req, res, 'Error in update hotel', err);
         } else {
