@@ -21,7 +21,7 @@ function userLoginCtrlConstructor($injector){
     vm.hotel = {};
     vm.reviews = [];
     vm.revievRating = undefined;
-    vm.datePicker = {};
+    vm.datePicker = {startDate: new Date(), endDate: new Date()};
     vm.canAddReview = false;
     vm.reviewToSend = {};
 
@@ -44,6 +44,17 @@ function userLoginCtrlConstructor($injector){
         .error(function(err) {
             console.log(err);
         });
+
+    $http.post('/hotel/' + $stateParams.hotelId + '/rooms', vm.datePicker)
+        .success(function(data) {
+            vm.hotel.rooms = [];
+            vm.hotel.rooms.push.apply(vm.hotel.rooms, data);
+        })
+        .error(function(err) {
+            console.log(err);
+        });
+
+
 
     vm.addReservation = function (roomItem) {
         // console.log(roomItem);

@@ -12,64 +12,157 @@
             <div>
                 <hotel-image-viewer hotel=hotelDetailsCtrl.hotel></hotel-image-viewer>
             </div>
-            <div>
-                {{hotelDetailsCtrl.hotel.description}}
-            </div>
-        </md-card-content>
-        <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-if="!hotelDetailsCtrl.canAddReview" ng-click="hotelDetailsCtrl.addReview()">Add review.</md-button>
-        </md-card-actions>
-        <div ng-if="hotelDetailsCtrl.canAddReview" layout="row" layout-align="center center">
-            <md-input-container>
-                <label>Stars</label>
-                <md-select id="rating" ng-model="hotelDetailsCtrl.reviewToSend.rating">
-                    <md-option ng-repeat="item in [1,2,3,4,5]" ng-value="item">
-                        {{item}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container >
-                <label>Review: </label>
-                <textarea type="text" rows="2" name="description" ng-model="hotelDetailsCtrl.reviewToSend.description" ></textarea>
-            </md-input-container>
-            <md-input-container>
-                <md-button class="material-icons" ng-click="hotelDetailsCtrl.saveReview()">save</md-button>
-            </md-input-container>
-        </div>
-        <md-card-footer>
-            <h1>Rooms:</h1>
-            <md-input-container>
-                <label>Start date</label>
-                <md-datepicker ng-model="hotelDetailsCtrl.datePicker.startDate"></md-datepicker>
-            </md-input-container>
-            <md-input-container>
-                <label>End date</label>
-                <md-datepicker ng-model="hotelDetailsCtrl.datePicker.endDate"></md-datepicker>
-            </md-input-container>
-            <div ng-repeat="roomItem in hotelDetailsCtrl.hotel.rooms" layout-gt-sm="row" layout-align="start center">
-                <md-input-container>
-                    {{roomItem.type}}
-                </md-input-container>
-                <md-input-container>
-                    {{roomItem.description}}
-                </md-input-container>
-                <md-input-container>
-                    {{roomItem.capacity}}
-                </md-input-container>
-                <md-input-container>
-                    <md-button class="material-icons" ng-click="hotelDetailsCtrl.addReservation(roomItem)">add</md-button>
-                </md-input-container>
-            </div>
 
-            <h1>Reviews:</h1>
-            <div ng-repeat="revItem in hotelDetailsCtrl.reviews">
-                <div>
-                    {{revItem.description}}
-                    <md-input-container>
-                        <md-button class="material-icons" ng-click="hotelDetailsCtrl.deleteReview(revItem)">delete</md-button>
-                    </md-input-container>
-                </div>
-            </div>
-        </md-card-footer>
+        </md-card-content>
+
+        <div ng-cloak>
+            <md-content >
+                <md-tabs md-dynamic-height md-border-bottom >
+                    <md-tab label="Description">
+                        <md-content class="md-padding">
+                            <!--<h1 class="md-display-3">Tab One</h1>-->
+                            <div>
+                                {{hotelDetailsCtrl.hotel.description}}
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Reviews">
+                        <md-content class="md-padding">
+                            <!--List review start-->
+                            <div ng-if="hotelDetailsCtrl.reviews.length == 0">
+                                Nothing to show here.
+                            </div>
+                            <div ng-repeat="revItem in hotelDetailsCtrl.reviews">
+                                <div>
+                                    <md-input-container>
+                                        {{revItem.description}}
+                                        <md-button class="material-icons md-primary" ng-click="hotelDetailsCtrl.deleteReview(revItem)">delete</md-button>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <!--List review end-->
+
+                            <!--Addreview start-->
+                            <md-card-actions layout="row" layout-align="start center" ng-if="SessionService.getSignedInUser() != undefined">
+                                <md-button class="md-warn" ng-if="!hotelDetailsCtrl.canAddReview" ng-click="hotelDetailsCtrl.addReview()">Add review</md-button>
+                            </md-card-actions>
+                            <div ng-if="hotelDetailsCtrl.canAddReview" layout="row" layout-align="center center">
+                                <md-input-container>
+                                    <label>Stars</label>
+                                    <md-select id="rating" ng-model="hotelDetailsCtrl.reviewToSend.rating">
+                                        <md-option ng-repeat="item in [1,2,3,4,5]" ng-value="item">
+                                            {{item}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container style="width: 100%;">
+                                    <label>Review: </label>
+                                    <textarea type="text" rows="2" name="description" ng-model="hotelDetailsCtrl.reviewToSend.description" ></textarea>
+                                </md-input-container>
+                                <md-input-container>
+                                    <md-button class="material-icons md-primary" ng-click="hotelDetailsCtrl.saveReview()">save</md-button>
+                                </md-input-container>
+                                <md-input-container>
+                                    <md-button class="material-icons md-warn" ng-click="hotelDetailsCtrl.addReview()">cancel</md-button>
+                                </md-input-container>
+                            </div>
+                            <!--Addreview end-->
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="reservation" ng-disabled="SessionService.getSignedInUser().role != 'guest'">
+                        <md-content class="md-padding">
+                            <md-card-footer>
+                                <md-input-container>
+                                    <label>Start date</label>
+                                    <md-datepicker ng-model="hotelDetailsCtrl.datePicker.startDate"></md-datepicker>
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>End date</label>
+                                    <md-datepicker ng-model="hotelDetailsCtrl.datePicker.endDate"></md-datepicker>
+                                </md-input-container>
+                                <div ng-repeat="roomItem in hotelDetailsCtrl.hotel.rooms" layout-gt-sm="row" layout-align="start center">
+                                    <md-input-container style="width: 100%;">
+                                        {{roomItem.type[0]}}
+                                    </md-input-container>
+                                    <md-input-container style="width: 100%;">
+                                        {{roomItem.description}}
+                                    </md-input-container>
+                                    <md-input-container style="width: 100%;">
+                                        {{roomItem.capacity}} beds
+                                    </md-input-container>
+                                    <md-input-container style="width: 100%;">
+                                        {{roomItem.price}} $
+                                    </md-input-container>
+                                    <md-input-container >
+                                        <md-button class="material-icons md-primary" ng-click="hotelDetailsCtrl.addReservation(roomItem)">add</md-button>
+                                    </md-input-container>
+                                </div>
+                            </md-card-footer>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="room admin" ng-if="SessionService.getSignedInUser().role == 'host'">
+                        <md-content class="md-padding">
+                            <h1 class="md-display-2">Tab Three</h1>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+        </div>
+
+        <!--<md-card-actions layout="row" layout-align="end center">-->
+            <!--<md-button ng-if="!hotelDetailsCtrl.canAddReview" ng-click="hotelDetailsCtrl.addReview()">Add review.</md-button>-->
+        <!--</md-card-actions>-->
+        <!--<div ng-if="hotelDetailsCtrl.canAddReview" layout="row" layout-align="center center">-->
+            <!--<md-input-container>-->
+                <!--<label>Stars</label>-->
+                <!--<md-select id="rating" ng-model="hotelDetailsCtrl.reviewToSend.rating">-->
+                    <!--<md-option ng-repeat="item in [1,2,3,4,5]" ng-value="item">-->
+                        <!--{{item}}-->
+                    <!--</md-option>-->
+                <!--</md-select>-->
+            <!--</md-input-container>-->
+            <!--<md-input-container >-->
+                <!--<label>Review: </label>-->
+                <!--<textarea type="text" rows="2" name="description" ng-model="hotelDetailsCtrl.reviewToSend.description" ></textarea>-->
+            <!--</md-input-container>-->
+            <!--<md-input-container>-->
+                <!--<md-button class="material-icons" ng-click="hotelDetailsCtrl.saveReview()">save</md-button>-->
+            <!--</md-input-container>-->
+        <!--</div>-->
+        <!--<md-card-footer>-->
+            <!--<h1>Rooms:</h1>-->
+            <!--<md-input-container>-->
+                <!--<label>Start date</label>-->
+                <!--<md-datepicker ng-model="hotelDetailsCtrl.datePicker.startDate"></md-datepicker>-->
+            <!--</md-input-container>-->
+            <!--<md-input-container>-->
+                <!--<label>End date</label>-->
+                <!--<md-datepicker ng-model="hotelDetailsCtrl.datePicker.endDate"></md-datepicker>-->
+            <!--</md-input-container>-->
+            <!--<div ng-repeat="roomItem in hotelDetailsCtrl.hotel.rooms" layout-gt-sm="row" layout-align="start center">-->
+                <!--<md-input-container>-->
+                    <!--{{roomItem.type}}-->
+                <!--</md-input-container>-->
+                <!--<md-input-container>-->
+                    <!--{{roomItem.description}}-->
+                <!--</md-input-container>-->
+                <!--<md-input-container>-->
+                    <!--{{roomItem.capacity}}-->
+                <!--</md-input-container>-->
+                <!--<md-input-container>-->
+                    <!--<md-button class="material-icons" ng-click="hotelDetailsCtrl.addReservation(roomItem)">add</md-button>-->
+                <!--</md-input-container>-->
+            <!--</div>-->
+
+            <!--<h1>Reviews:</h1>-->
+            <!--<div ng-repeat="revItem in hotelDetailsCtrl.reviews">-->
+                <!--<div>-->
+                    <!--{{revItem.description}}-->
+                    <!--<md-input-container>-->
+                        <!--<md-button class="material-icons" ng-click="hotelDetailsCtrl.deleteReview(revItem)">delete</md-button>-->
+                    <!--</md-input-container>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</md-card-footer>-->
     </md-card>
 </md-content>
