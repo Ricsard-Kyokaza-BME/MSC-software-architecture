@@ -13,6 +13,7 @@ function userLoginCtrlConstructor($injector){
     var Reservation = $injector.get('Reservation');
     var $stateParams = $injector.get('$stateParams');
     var $mdToast = $injector.get('$mdToast');
+    var Review = $injector.get('Review');
 
 
     var vm = this;
@@ -21,6 +22,8 @@ function userLoginCtrlConstructor($injector){
     vm.reviews = [];
     vm.revievRating = undefined;
     vm.datePicker = {};
+    vm.canAddReview = false;
+    vm.reviewToSend = {};
 
     $http.get('/hotel/' + $stateParams.hotelId)
         .success(function(data) {
@@ -79,6 +82,29 @@ function userLoginCtrlConstructor($injector){
         }
 
         return true;
+    };
+
+    vm.addReview = function () {
+        vm.canAddReviewClicked();
+    };
+
+    vm.saveReview = function () {
+        vm.canAddReviewClicked();
+        var rev = new Review( '', '', vm.hotel._id, vm.reviewToSend.description, new Date(), vm.reviewToSend.rating);
+        $http.post('/review', rev.transformToSend())
+            .success(function(data) {
+                console.log(data);
+                $mdToast.show($mdToast.simple().content('Review successfully added.'));
+                vm.reviewToSend = {};
+            })
+            .error(function(err) {
+                $mdToast.show($mdToast.simple().content('Review failed'));
+                console.log(err);
+            })
+    };
+
+    vm.canAddReviewClicked = function () {
+        vm.canAddReview = !vm.canAddReview;
     };
 
 }
