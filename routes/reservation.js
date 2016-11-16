@@ -6,6 +6,8 @@ var Hotel = require('../models/hotel');
 var Room = require('../models/room');
 var commons = require('../commonFunctions');
 
+var populateReservationsBetweenTwoDate = commons.populateReservationsBetweenTwoDate;
+
 /* GET list user's reservations. */
 router.get('/', commons.isAuthenticated, commons.hasGuestLevel, function(req, res, next) {
     Reservation
@@ -42,20 +44,23 @@ router.post('/', commons.isAuthenticated, commons.hasGuestLevel, function(req, r
     var reservation = new Reservation(req.body);
     reservation.owner = req.user._id;
 
-    reservation.save(function(err, savedReservation) {
-        if (err){
-            commons.sendError(req, res, 'Error in add reservation', err);
-        } else {
-            Room.findOneAndUpdate({_id: reservation.roomId}, {$pushAll: {reservations: [savedReservation._id]}}, {new: true},
-                function (err, reservation) {
-                    if(err) {
-                        commons.sendError(req, res, 'Error in add reservation', err);
-                    } else {
-                        res.json(savedReservation);
-                    }
-            })
-        }
-    });
+    Room.findOne({_id: reservation.roomId})
+        .populate(populateReservationsBetweenTwoDate(req.body.startDate, req.body.endDate))
+        .exec(function (err, room) {
+            if(err) {
+                commons.sendError(req, res, 'Error in add reservation', err);
+            } else {
+                if(room.reservations.length < room.quantity) {
+                    reservation.save(function(err, savedReservation) {
+                        if (err){
+                            commons.sendError(req, res, 'Error in add reservation', err);
+                        } else {
+                            res.json(savedReservation);
+                        }
+                    });
+                }
+            }
+        });
 });
 
 //TODO

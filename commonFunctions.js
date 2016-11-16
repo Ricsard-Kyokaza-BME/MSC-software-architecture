@@ -43,10 +43,75 @@ var hasHostLevel = function(req, res, next) {
     }
 };
 
+var populateReservationsBetweenTwoDate = function(startDate, endDate) {
+    return {
+        path: 'reservations',
+        match: {$or: [
+            {$and: [
+                {startDate: {$lte: startDate}},
+                {endDate: {$gte: startDate}},
+                {endDate: {$lte: endDate}}
+            ]},
+            {$and: [
+                {startDate: {$gte: startDate}},
+                {startDate: {$lte: endDate}},
+                {endDate: {$gte: endDate}}
+            ]},
+            {$and: [
+                {startDate: {$gte: startDate}},
+                {startDate: {$lte: endDate}},
+                {endDate: {$lte: endDate}},
+                {endDate: {$gte: startDate}}
+            ]},
+            {$and: [
+                {startDate: {$lte: startDate}},
+                {startDate: {$lte: endDate}},
+                {endDate: {$gte: endDate}},
+                {endDate: {$gte: startDate}}
+            ]}
+        ]}
+    };
+};
+
+var populateRoomsAlongReservationsBetweenTwoDate = function (startDate, endDate) {
+    return {
+        path: 'rooms',
+        populate: {
+            path: 'reservations',
+            match: {$or: [
+                {$and: [
+                    {startDate: {$lte: startDate}},
+                    {endDate: {$gte: startDate}},
+                    {endDate: {$lte: endDate}}
+                ]},
+                {$and: [
+                    {startDate: {$gte: startDate}},
+                    {startDate: {$lte: endDate}},
+                    {endDate: {$gte: endDate}}
+                ]},
+                {$and: [
+                    {startDate: {$gte: startDate}},
+                    {startDate: {$lte: endDate}},
+                    {endDate: {$lte: endDate}},
+                    {endDate: {$gte: startDate}}
+                ]},
+                {$and: [
+                    {startDate: {$lte: startDate}},
+                    {startDate: {$lte: endDate}},
+                    {endDate: {$gte: endDate}},
+                    {endDate: {$gte: startDate}}
+                ]}
+            ]}
+        }
+    };
+};
+
 var functions = {};
 functions.sendError = sendError;
 functions.isAuthenticated = isAuthenticated;
 functions.hasGuestLevel = hasGuestLevel;
 functions.hasHostLevel = hasHostLevel;
+functions.populateReservationsBetweenTwoDate = populateReservationsBetweenTwoDate;
+functions.populateRoomsAlongReservationsBetweenTwoDate = populateRoomsAlongReservationsBetweenTwoDate;
 
 module.exports = functions;

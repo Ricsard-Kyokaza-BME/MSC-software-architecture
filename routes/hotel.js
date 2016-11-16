@@ -22,6 +22,9 @@ var imageStorage = multer.diskStorage({
 });
 var imageUpload = multer({ storage: imageStorage });
 
+var populateRoomsAlongReservationsBetweenTwoDate = commons.populateRoomsAlongReservationsBetweenTwoDate;
+
+
 /* GET list all hotels. */
 router.get('/', function(req, res, next) {
     Hotel.find({}, function(err,docs){
@@ -48,36 +51,7 @@ router.get('/own', commons.isAuthenticated, commons.hasHostLevel, function(req, 
 router.post('/search', function(req, res, next) {
     Hotel
         .find({location: { $regex: req.body.city || '', $options: "i" }})
-        .populate({
-            path: 'rooms',
-            populate: {
-                path: 'reservations',
-                match: {$or: [
-                        {$and: [
-                            {startDate: {$lte: req.body.startDate}},
-                            {endDate: {$gte: req.body.startDate}},
-                            {endDate: {$lte: req.body.endDate}}
-                        ]},
-                        {$and: [
-                            {startDate: {$gte: req.body.startDate}},
-                            {startDate: {$lte: req.body.endDate}},
-                            {endDate: {$gte: req.body.endDate}}
-                        ]},
-                        {$and: [
-                            {startDate: {$gte: req.body.startDate}},
-                            {startDate: {$lte: req.body.endDate}},
-                            {endDate: {$lte: req.body.endDate}},
-                            {endDate: {$gte: req.body.startDate}}
-                        ]},
-                        {$and: [
-                            {startDate: {$lte: req.body.startDate}},
-                            {startDate: {$lte: req.body.endDate}},
-                            {endDate: {$gte: req.body.endDate}},
-                            {endDate: {$gte: req.body.startDate}}
-                        ]}
-                    ]}
-            }
-        })
+        .populate(populateRoomsAlongReservationsBetweenTwoDate(req.body.startDate, req.body.endDate))
         .exec(function(error, docs) {
             var results = _.filter(docs, function (hotel) {
                 var isThereEmptyReservation = false;
@@ -133,11 +107,15 @@ router.post('/', commons.isAuthenticated, commons.hasHostLevel, function(req, re
 router.get('/:id', function(req, res, next) {
     Hotel
         .findOne({_id: req.params.id})
-        .populate({ path: 'rooms' })
+        .populate(populateRoomsAlongReservationsBetweenTwoDate(req.body.startDate, req.body.endDate))
         .exec(function(err, hotel){
         if (err){
             commons.sendError(req, res, 'Error in getting hotel', err);
         } else {
+            hotel.rooms = _.filter(hotel.rooms, function (room) {
+                return room.reservations.length < room.quantity;
+            });
+
             res.json(hotel);
         }
     });
