@@ -107,18 +107,31 @@ router.post('/', commons.isAuthenticated, commons.hasHostLevel, function(req, re
 router.get('/:id', function(req, res, next) {
     Hotel
         .findOne({_id: req.params.id})
-        .populate(populateRoomsAlongReservationsBetweenTwoDate(req.body.startDate, req.body.endDate))
         .exec(function(err, hotel){
         if (err){
             commons.sendError(req, res, 'Error in getting hotel', err);
         } else {
-            hotel.rooms = _.filter(hotel.rooms, function (room) {
-                return room.reservations.length < room.quantity;
-            });
-
             res.json(hotel);
         }
     });
+});
+
+/* POST get specified hotel's rooms between start and end date. */
+router.post('/:id/rooms', function(req, res, next) {
+    Hotel
+        .findOne({_id: req.params.id})
+        .populate(populateRoomsAlongReservationsBetweenTwoDate(req.body.startDate, req.body.endDate))
+        .exec(function(err, hotel){
+            if (err){
+                commons.sendError(req, res, 'Error in getting hotel', err);
+            } else {
+                var rooms = _.filter(hotel.rooms, function (room) {
+                    return room.reservations.length < room.quantity;
+                });
+
+                res.json(rooms);
+            }
+        });
 });
 
 /* GET hotel image. */
