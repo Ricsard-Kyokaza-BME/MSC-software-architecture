@@ -8,15 +8,17 @@ app.factory( "Room", function() {
      * @param {string} hotelId
      * @param {[String]} reservations
      * @param {number} capacity
+     * @param {number} quantity
      * @constructor
      */
-    function Room( id, type, description, hotelId, reservations, capacity ) {
+    function Room( id, type, description, hotelId, reservations, capacity, quantity ) {
         this.id = id || '';
         this.type = type || '';
         this.description = description || '';
         this.hotelId = hotelId || '';
         this.reservations = reservations || [];
         this.capacity = capacity || 0;
+        this.quantity = quantity || 0;
     }
 
     /**

@@ -5,5 +5,6 @@ module.exports = mongoose.model('Room',{
     description:     String,
     hotelId:         { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' },
     reservations:    [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reservation' }],
-    capacity:        Number
+    capacity:        Number,
+    quantity:        Number
 });

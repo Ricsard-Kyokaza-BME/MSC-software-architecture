@@ -82,7 +82,7 @@ router.post('/search', function(req, res, next) {
             var results = _.filter(docs, function (hotel) {
                 var isThereEmptyReservation = false;
                 _.each(hotel.rooms, function (room) {
-                   room.reservations.length == 0 ? isThereEmptyReservation = true : '';
+                   room.reservations.length < room.quantity ? isThereEmptyReservation = true : '';
                 });
                 return isThereEmptyReservation;
             });
