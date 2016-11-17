@@ -21,9 +21,7 @@ var imageStorage = multer.diskStorage({
     }
 });
 var imageUpload = multer({ storage: imageStorage });
-
 var populateRoomsAlongReservationsBetweenTwoDate = commons.populateRoomsAlongReservationsBetweenTwoDate;
-
 
 /* GET list all hotels. */
 router.get('/', function(req, res, next) {
@@ -84,13 +82,7 @@ router.post('/', commons.isAuthenticated, commons.hasHostLevel, function(req, re
                 if (err){
                     commons.sendError(req, res, 'Error in add hotel rooms', err);
                 } else {
-                    var roomIds = [];
-
-                    for(var i = 0; i < rooms.length; i++) {
-                        roomIds.push(rooms[i]._id);
-                    }
-
-                    savedHotel.rooms = roomIds;
+                    savedHotel.rooms.push.apply(savedHotel.rooms, rooms);
 
                     Hotel.findOneAndUpdate({ _id: savedHotel._id }, savedHotel, {new: true}, function(err, updatedHotel) {
                         if (err){
