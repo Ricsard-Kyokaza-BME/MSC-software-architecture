@@ -17,7 +17,6 @@ function userLoginCtrlConstructor($injector){
 
     $http.get('/hotel/own')
         .success(function(data) {
-            console.log(data);
             vm.myHotels.push.apply(vm.myHotels, data.results);
         })
         .error(function(err) {
@@ -26,7 +25,6 @@ function userLoginCtrlConstructor($injector){
 
 
     vm.onHotelClicked = function (item) {
-        console.log(item);
         $state.go('hotelsDetails', {hotelId: item._id});
     };
 
@@ -65,7 +63,9 @@ function userLoginCtrlConstructor($injector){
     vm.deleteHotel = function (id) {
         $http.delete('/hotel/' + id)
             .success(function(data) {
-                console.log(data);
+                _.delete(vm.myHotels, function (element) {
+                    return element._id == data.id;
+                })
             })
             .error(function(err) {
                 console.log(err);

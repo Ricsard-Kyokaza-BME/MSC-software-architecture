@@ -1,4 +1,5 @@
 <md-content class="md-padding">
+    <h1 ng-if="!myReservationCtrl.myReservations.length" align="center">You don't have any reservations</h1>
     <md-card ng-repeat="reservItem in myReservationCtrl.myReservations">
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -8,11 +9,8 @@
             </div>
         </md-toolbar>
         <md-card-content>
-            <p>From: {{reservItem.startDate | date : "y-MM-dd"}}</p>
-            <p>To: {{reservItem.endDate | date : "y-MM-dd"}}</p>
+            <h2>{{reservItem.startDate | date : "y-MM-dd"}} - {{reservItem.endDate | date : "y-MM-dd"}}</h2>
+            <md-button class="md-raised md-warn" ng-click="myReservationCtrl.deleteReservation(reservItem._id)">Delete</md-button>
         </md-card-content>
-        <!--<md-card-actions layout="row" layout-align="start center">-->
-            <!--<md-button class="md-raised md-primary" ng-click="hotelAdminCtrl.onHotelClicked(item)">View details</md-button>-->
-        <!--</md-card-actions>-->
     </md-card>
 </md-content>
