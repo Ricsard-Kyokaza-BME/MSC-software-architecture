@@ -18,8 +18,11 @@
                         <input type="text" name="name" ng-model="hotelCreate.hotel.name" required>
                     </md-input-container>
                     <md-input-container>
-                        <label>Location</label>
-                        <input type="text" name="location" ng-model="hotelCreate.hotel.location" required>
+                        <input type="text"
+                               name="city"
+                               ng-model="hotelCreate.hotel.location"
+                               ng-autocomplete
+                               options="place.options" details="place.details">
                     </md-input-container>
                     <md-input-container>
                         <label>Stars</label>

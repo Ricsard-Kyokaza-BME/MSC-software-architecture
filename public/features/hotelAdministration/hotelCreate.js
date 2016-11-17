@@ -20,6 +20,14 @@ function userLoginCtrlConstructor($scope, $injector){
     vm.room = new Room();
     vm.roomsToAdd = [];
     vm.images = [];
+    vm.place = {
+        options: {
+            types: '(cities, streets)',
+            language: 'en',
+            watchEnter: true
+        },
+        details: {}
+    };
 
     vm.createHotel = function () {
         vm.hotel.rooms = _.map(vm.roomsToAdd, function (element) {

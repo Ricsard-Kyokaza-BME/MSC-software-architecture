@@ -10,8 +10,11 @@
         <form name="registerForm" ng-submit="browse.sendSearch()">
             <div layout-gt-sm="row">
                 <md-input-container>
-                    <label>City</label>
-                    <input type="text" name="city" ng-model="browse.search.city">
+                    <input type="text"
+                           name="city"
+                           ng-model="browse.search.city"
+                           ng-autocomplete
+                           options="place.options" details="place.details">
                 </md-input-container>
                 <md-input-container>
                     <label>Start date</label>

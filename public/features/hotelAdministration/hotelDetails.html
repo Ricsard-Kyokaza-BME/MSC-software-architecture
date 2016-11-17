@@ -105,6 +105,14 @@
                             <h1 class="md-display-2">Tab Three</h1>
                         </md-content>
                     </md-tab>
+                    <md-tab label="location">
+                        <md-content class="md-padding">
+                            <map center="{{hotelDetailsCtrl.hotel.location}}" zoom="18">
+                                <marker position="{{hotelDetailsCtrl.hotel.location}}"
+                                        title="{{hotelDetailsCtrl.hotel.name}}"></marker>
+                            </map>
+                        </md-content>
+                    </md-tab>
                 </md-tabs>
             </md-content>
         </div>

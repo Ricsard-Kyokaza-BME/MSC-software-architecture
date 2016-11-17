@@ -1,4 +1,5 @@
-var app = angular.module('HotelReservation', ['ui.router', 'ui.bootstrap', 'ngFileUpload', 'ngMaterial']);
+var app = angular.module('HotelReservation', ['ui.router', 'ui.bootstrap',
+    'ngFileUpload', 'ngMaterial', 'ngAutocomplete', 'ngMap']);
 app.constant('_', window._);
 app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     $mdIconProvider.fontSet('md', 'material-icons');

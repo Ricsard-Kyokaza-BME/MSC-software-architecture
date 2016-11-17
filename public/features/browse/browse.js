@@ -18,6 +18,14 @@ function browseConstructor($injector){
         roomType: 'ANY'
     };
     vm.RoomTypeArray = getRoomTypeArray(RoomType);
+    vm.place = {
+        options: {
+            types: '(cities)',
+            language: 'en',
+            watchEnter: true
+        },
+        details: {}
+    };
 
     $http.get('/hotel')
         .success(function(data) {
