@@ -65,7 +65,7 @@
                 </md-card-title-text>
             </md-card-title>
             <md-card-content ng-click="browse.onHotelClicked(hotel)">
-                <p>{{::hotel.description}}</p>
+                <span class="material-icons" ng-repeat="star in browse.getStarsRange(hotel.luxuryLevel)">star</span>
             </md-card-content>
         </md-card>
     </md-grid-tile>
