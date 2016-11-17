@@ -27,3 +27,9 @@ _.delete = function(array, criteria) {
 String.prototype.capitalize = function() {
     return this.charAt(0).toLocaleUpperCase() + this.slice(1).toLocaleLowerCase();
 };
+
+function getRoomTypeArray(roomType) {
+    return _.map(roomType, function (element) {
+        return { text: element.replace('_', ' '), value: element };
+    });
+}

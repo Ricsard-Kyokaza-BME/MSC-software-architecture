@@ -22,6 +22,23 @@
                     <md-datepicker ng-model="browse.search.endDate"></md-datepicker>
                 </md-input-container>
                 <md-input-container>
+                    <label>Person</label>
+                    <md-select id="luxuryLevel" ng-model="browse.search.personCount">
+                        <md-option ng-repeat="item in [1,2,3,4,5,6,7,8,9,10]" ng-value="item">
+                            {{item}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
+                    <label>Room type</label>
+                    <md-select name="type" ng-model="browse.search.roomType">
+                        <md-option value="ANY">Any</md-option>
+                        <md-option ng-repeat="item in browse.RoomTypeArray" ng-value="item.value">
+                            {{item.text | capitalize}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container>
                     <md-button class="md-raised md-primary" type="submit">Search</md-button>
                 </md-input-container>
             </div>

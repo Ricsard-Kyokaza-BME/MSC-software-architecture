@@ -15,9 +15,7 @@ function userLoginCtrlConstructor($scope, $injector){
 
     var vm = this;
 
-    vm.RoomTypeArray = _.map(RoomType, function (element) {
-        return { text: element.replace('_', ' '), value: element };
-    });
+    vm.RoomTypeArray = getRoomTypeArray(RoomType);
     vm.hotel = new Hotel();
     vm.room = new Room();
     vm.roomsToAdd = [];

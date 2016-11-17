@@ -8,11 +8,16 @@ function browseConstructor($injector){
     var $state = $injector.get('$state');
     var StateHandler = $injector.get('StateHandler');
     var Hotel = $injector.get('Hotel');
+    var RoomType = $injector.get('RoomType');
 
     var vm = this;
 
     vm.hotels = [];
-    vm.search = {};
+    vm.search = {
+        personCount: 1,
+        roomType: 'ANY'
+    };
+    vm.RoomTypeArray = getRoomTypeArray(RoomType);
 
     $http.get('/hotel')
         .success(function(data) {

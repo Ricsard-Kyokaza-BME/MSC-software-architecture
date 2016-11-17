@@ -50,8 +50,10 @@ router.get('/own', commons.isAuthenticated, commons.hasHostLevel, function(req, 
 /* POST search hotels. */
 router.post('/search', function(req, res, next) {
     Hotel
-        .find({location: { $regex: req.body.city || '', $options: "i" }})
-        .populate(populateRoomsAlongReservationsBetweenTwoDate(req.body.startDate, req.body.endDate))
+        .find(
+            {location: { $regex: req.body.city || '', $options: "i" }})
+        .populate(populateRoomsAlongReservationsBetweenTwoDate(
+            req.body.startDate, req.body.endDate, req.body.personCount, req.body.roomType))
         .exec(function(error, docs) {
             var results = _.filter(docs, function (hotel) {
                 var isThereEmptyReservation = false;

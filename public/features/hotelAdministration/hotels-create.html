@@ -69,7 +69,12 @@
                 </div>
                 <div ng-repeat="room in hotelCreate.roomsToAdd" layout-gt-sm="row" layout-align="start center">
                     <md-input-container>
-                        <input type="text" ng-model="room.type | capitalize" ng-disabled="true">
+                        <label>Type</label>
+                        <md-select ng-model="room.type" ng-disabled="true">
+                            <md-option ng-repeat="item in hotelCreate.RoomTypeArray" ng-value="item.value">
+                                {{item.text | capitalize}}
+                            </md-option>
+                        </md-select>
                     </md-input-container>
                     <md-input-container>
                         <input type="text" ng-model="room.description" ng-disabled="true">

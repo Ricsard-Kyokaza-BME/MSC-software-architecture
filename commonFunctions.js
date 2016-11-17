@@ -73,9 +73,14 @@ var populateReservationsBetweenTwoDate = function(startDate, endDate) {
     };
 };
 
-var populateRoomsAlongReservationsBetweenTwoDate = function (startDate, endDate) {
+var populateRoomsAlongReservationsBetweenTwoDate = function (startDate, endDate, capacity, roomType) {
+    var roomMatcher = (capacity && roomType && roomType != 'ANY')
+        ? { $and: [{ capacity: {$gte: capacity} }, { type: roomType }]}
+        : (capacity ? { capacity: {$gte: capacity}} : {});
+
     return {
         path: 'rooms',
+        match: roomMatcher,
         populate: {
             path: 'reservations',
             match: {$or: [
