@@ -114,6 +114,7 @@
                     </md-tab>
                     <md-tab label="location">
                         <md-content class="md-padding">
+                            <h2>{{hotelDetailsCtrl.hotel.location}}</h2>
                             <map center="{{hotelDetailsCtrl.hotel.location}}" zoom="18">
                                 <marker position="{{hotelDetailsCtrl.hotel.location}}"
                                         title="{{hotelDetailsCtrl.hotel.name}}"></marker>
