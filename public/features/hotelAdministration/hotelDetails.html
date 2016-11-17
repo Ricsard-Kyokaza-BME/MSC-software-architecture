@@ -20,17 +20,24 @@
                 <md-tabs md-dynamic-height md-border-bottom >
                     <md-tab label="Description">
                         <md-content class="md-padding">
-                            <!--<h1 class="md-display-3">Tab One</h1>-->
-                            <div>
-                                {{hotelDetailsCtrl.hotel.description}}
-                            </div>
+                            <h2>Stars</h2>
+                            <span class="material-icons" ng-repeat="star in hotelDetailsCtrl.getStarsRange(hotelDetailsCtrl.hotel.luxuryLevel)">star</span>
+                            <p></p>
+                            <md-divider></md-divider>
+                            <h2>Description</h2>
+                            <p>{{hotelDetailsCtrl.hotel.description}}</p>
                         </md-content>
                     </md-tab>
                     <md-tab label="Reviews">
                         <md-content class="md-padding">
+                            <h2>Average review rating</h2>
+                            <h3>{{hotelDetailsCtrl.revievRating}}</h3>
+                            <p></p>
+                            <md-divider></md-divider>
+                            <h2>Reviews</h2>
                             <!--List review start-->
                             <div ng-if="hotelDetailsCtrl.reviews.length == 0">
-                                Nothing to show here.
+                                There's no reviews yet.
                             </div>
                             <div ng-repeat="revItem in hotelDetailsCtrl.reviews">
                                 <div>
@@ -44,7 +51,7 @@
 
                             <!--Addreview start-->
                             <md-card-actions layout="row" layout-align="start center" ng-if="SessionService.getSignedInUser() != undefined">
-                                <md-button class="md-warn" ng-if="!hotelDetailsCtrl.canAddReview" ng-click="hotelDetailsCtrl.addReview()">Add review</md-button>
+                                <md-button class="md-raised md-primary" ng-if="!hotelDetailsCtrl.canAddReview" ng-click="hotelDetailsCtrl.addReview()">Add review</md-button>
                             </md-card-actions>
                             <div ng-if="hotelDetailsCtrl.canAddReview" layout="row" layout-align="center center">
                                 <md-input-container>
