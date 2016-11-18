@@ -156,16 +156,17 @@
                                     <!--<md-button class="material-icons" ng-click="hotelCreate.deleteRoom(room)">delete</md-button>-->
                                     <!--</md-input-container>-->
                                 </div>
+                                <md-input-container>
+                                    <md-button class="md-primary" ng-click="hotelDetailsCtrl.addRoom()">Add room</md-button>
+                                </md-input-container>
                                 <md-input-container ng-if="hotelDetailsCtrl.roomsToAddArray.length > 0">
                                     <md-button class="material-icons" ng-click="hotelDetailsCtrl.roomAdditionDone()">done</md-button>
-                                </md-input-container><md-input-container ng-if="hotelDetailsCtrl.roomsToAddArray.length > 0">
+                                </md-input-container>
+                                <md-input-container ng-if="hotelDetailsCtrl.roomsToAddArray.length > 0">
                                     <md-button class="material-icons md-warn" ng-click="hotelDetailsCtrl.roomAdditionCanceled()">cancel</md-button>
                                 </md-input-container>
                             </div>
                             <!--Room addition ended-->
-                            <md-input-container>
-                                <md-button class="md-primary" ng-click="hotelDetailsCtrl.addRoom()">Add room</md-button>
-                            </md-input-container>
                         </md-content>
                     </md-tab>
                     <!--Room administration end-->

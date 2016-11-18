@@ -171,7 +171,8 @@ function userLoginCtrlConstructor($injector){
 
     vm.roomAdditionDone = function () {
         console.log("DONE");
-        vm.roomsToAddArray.push(vm.room);
+        // vm.roomsToAddArray.push(vm.room);
+        console.log(vm.roomsToAddArray);
         // post rooms array to the hotel rooms
 
         // clear the array and room variable
