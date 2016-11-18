@@ -107,11 +107,68 @@
                             </md-card-footer>
                         </md-content>
                     </md-tab>
+
+                    <!--Room administration start-->
                     <md-tab label="room admin" ng-if="SessionService.getSignedInUser().role == 'host'">
                         <md-content class="md-padding">
-                            <h1 class="md-display-2">Tab Three</h1>
+                            <div ng-repeat="roomItem in hotelDetailsCtrl.hotel.rooms" layout-gt-sm="row" layout-align="start center">
+                                <md-input-container style="width: 100%;">
+                                    {{roomItem.type[0]}}
+                                </md-input-container>
+                                <md-input-container style="width: 100%;">
+                                    {{roomItem.description}}
+                                </md-input-container>
+                                <md-input-container style="width: 100%;">
+                                    {{roomItem.capacity}} beds
+                                </md-input-container>
+                                <md-input-container style="width: 100%;">
+                                    {{roomItem.price}} $
+                                </md-input-container>
+                                <md-input-container >
+                                    <md-button class="material-icons md-warn" ng-click="hotelDetailsCtrl.roomModification(roomItem)">edit</md-button>
+                                </md-input-container>
+                            </div>
+
+                            <!--Room addition ongoing starts-->
+                            <div>
+                                <div ng-repeat="room in hotelDetailsCtrl.roomsToAddArray" layout-gt-sm="row" layout-align="start center">
+                                    <md-input-container>
+                                        <label>Type</label>
+                                        <md-select ng-model="room.type" ng-disabled="false">
+                                            <md-option ng-repeat="item in hotelCreate.RoomTypeArray" ng-value="item.value">
+                                                {{item.text | capitalize}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <input type="text" ng-model="room.description" ng-disabled="false" placeholder="description">
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <input type="number" ng-model="room.quantity" ng-disabled="false" placeholder="quantity">
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <input type="number" ng-model="room.capacity" ng-disabled="false" placeholder="capacity">
+                                    </md-input-container>
+                                    <md-input-container>
+                                        <input type="number" ng-model="room.price" ng-disabled="false" placeholder="price">
+                                    </md-input-container>
+                                    <!--<md-input-container>-->
+                                    <!--<md-button class="material-icons" ng-click="hotelCreate.deleteRoom(room)">delete</md-button>-->
+                                    <!--</md-input-container>-->
+                                </div>
+                                <md-input-container ng-if="hotelDetailsCtrl.roomsToAddArray.length > 0">
+                                    <md-button class="material-icons" ng-click="hotelDetailsCtrl.roomAdditionDone()">done</md-button>
+                                </md-input-container><md-input-container ng-if="hotelDetailsCtrl.roomsToAddArray.length > 0">
+                                    <md-button class="material-icons md-warn" ng-click="hotelDetailsCtrl.roomAdditionCanceled()">cancel</md-button>
+                                </md-input-container>
+                            </div>
+                            <!--Room addition ended-->
+                            <md-input-container>
+                                <md-button class="md-primary" ng-click="hotelDetailsCtrl.addRoom()">Add room</md-button>
+                            </md-input-container>
                         </md-content>
                     </md-tab>
+                    <!--Room administration end-->
                     <md-tab label="location">
                         <md-content class="md-padding">
                             <h2>{{hotelDetailsCtrl.hotel.location}}</h2>

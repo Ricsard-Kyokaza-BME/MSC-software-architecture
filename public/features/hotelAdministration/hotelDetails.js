@@ -14,6 +14,8 @@ function userLoginCtrlConstructor($injector){
     var $stateParams = $injector.get('$stateParams');
     var $mdToast = $injector.get('$mdToast');
     var Review = $injector.get('Review');
+    var RoomType = $injector.get('RoomType');
+
 
 
     var vm = this;
@@ -24,6 +26,12 @@ function userLoginCtrlConstructor($injector){
     vm.datePicker = {startDate: new Date(), endDate: new Date()};
     vm.canAddReview = false;
     vm.reviewToSend = {};
+
+    vm.roomsToAddArray = [];
+    vm.roomAdditionOngoing = false;
+    vm.RoomTypeArray = getRoomTypeArray(RoomType);
+    vm.room = new Room();
+
 
     $http.get('/hotel/' + $stateParams.hotelId)
         .success(function(data) {
@@ -142,4 +150,36 @@ function userLoginCtrlConstructor($injector){
 
         return ratings;
     };
+
+    vm.addRoom = function () {
+        vm.roomsToAddArray.push(vm.room);
+        vm.room = new Room();
+        // console.log(vm.room);
+        // console.log(vm.roomsToAddArray);
+    };
+
+    vm.roomModification = function (roomToModify) {
+        console.log("Modify room");
+        console.log(roomToModify);
+
+    };
+
+    vm.roomAdditionCanceled = function () {
+        vm.roomsToAddArray = [];
+        vm.room = new Room();
+    };
+
+    vm.roomAdditionDone = function () {
+        console.log("DONE");
+        vm.roomsToAddArray.push(vm.room);
+        // post rooms array to the hotel rooms
+
+        // clear the array and room variable
+    };
+
+    function getRoomTypeArray(roomType) {
+        return _.map(roomType, function (element) {
+            return { text: element.replace('_', ' '), value: element };
+        });
+    }
 }
