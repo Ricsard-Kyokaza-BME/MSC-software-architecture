@@ -7,7 +7,7 @@
       <!--<md-content class="md-padding" layout-xs="column" layout="row">-->
         <md-nav-bar md-selected-nav-item="getCurrentState().name" layout-xs="column" layout="row" nav-bar-aria-label="navigation links">
           <md-nav-item md-nav-href="#/" name="index">Browse</md-nav-item>
-          <md-nav-item ng-if="SessionService.getSignedInUser() != undefined" md-nav-href="#/reservations" name="reservations">My reservations</md-nav-item>
+          <md-nav-item ng-if="SessionService.getSignedInUser().role == 'guest'" md-nav-href="#/reservations" name="reservations">My reservations</md-nav-item>
           <md-nav-item ng-if="SessionService.getSignedInUser().role=='host'" md-nav-href="#/hotels" name="hotels">hotels</md-nav-item>
         </md-nav-bar>
       <!--</md-content>-->

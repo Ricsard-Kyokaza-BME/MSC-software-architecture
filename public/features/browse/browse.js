@@ -51,6 +51,16 @@ function browseConstructor($injector){
             .error(function(err) {
                 console.log(err);
             });
-    }
+    };
+
+    vm.getStarsRange = function(count){
+        var ratings = [];
+
+        for (var i = 0; i < count; i++) {
+            ratings.push(i)
+        }
+
+        return ratings;
+    };
 
 }

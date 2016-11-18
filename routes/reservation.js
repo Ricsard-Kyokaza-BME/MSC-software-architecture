@@ -55,7 +55,11 @@ router.post('/', commons.isAuthenticated, commons.hasGuestLevel, function(req, r
                         if (err){
                             commons.sendError(req, res, 'Error in add reservation', err);
                         } else {
-                            res.json(savedReservation);
+                            room.reservations.push(savedReservation._id);
+                            room.save(function (err, room) {
+                                err ? commons.sendError(req, res, 'Error in add reservation', err)
+                                    : res.json(savedReservation);
+                            });
                         }
                     });
                 }

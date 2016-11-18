@@ -1,5 +1,10 @@
 <md-content class="md-padding">
     <md-button class="md-raised md-warning" ng-click="hotelAdminCtrl.createNewHotel()">
+    <button ng-click="hotelAdminCtrl.addHotel()">
+        Add hotel
+    </button>
+    <h1 ng-if="!hotelAdminCtrl.myHotels.length" align="center">You don't have any hotels</h1>
+    <md-button class="md-raised md-primary" ng-click="hotelAdminCtrl.createNewHotel()">
         Create new hotel
     </md-button>
     <md-card ng-repeat="item in hotelAdminCtrl.myHotels">
@@ -10,20 +15,9 @@
                 </h2>
             </div>
         </md-toolbar>
-        <md-card-content>
-            <hotel-image-viewer hotel="item"></hotel-image-viewer>
-            {{item.desctiption}}
-            <!--<div ng-click="hotelAdminCtrl.onHotelClicked(item)">-->
-                <!--katt-->
-            <!--</div>-->
-        </md-card-content>
-        <md-card-content>
-            <md-card-actions layout="row" layout-align="start center">
-                <md-button class="md-raised md-primary" ng-click="hotelAdminCtrl.onHotelClicked(item)">View details</md-button>
-            </md-card-actions>
-            <md-card-actions layout="row" layout-align="start center">
-                <md-button class="md-raised md-primary" ng-click="hotelAdminCtrl.deleteHotel(item._id)">Delete</md-button>
-            </md-card-actions>
-        </md-card-content>
+        <md-card-actions layout="row" layout-align="start center">
+            <md-button class="md-raised md-primary" ng-click="hotelAdminCtrl.onHotelClicked(item)">View details</md-button>
+            <md-button class="md-raised md-warn" ng-click="hotelAdminCtrl.deleteHotel(item._id)">Delete</md-button>
+        </md-card-actions>
     </md-card>
 </md-content>

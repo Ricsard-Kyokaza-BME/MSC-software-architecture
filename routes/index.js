@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 
-var fs = require('fs');
+var commons = require('../commonFunctions');
 
 module.exports = function(passport){
 
@@ -28,6 +28,11 @@ module.exports = function(passport){
     req.session.destroy(function (err) {
       res.json({page: '/'});
     });
+  });
+
+  /* GET index page. */
+  router.get('/checkSession', commons.isAuthenticated, function(req, res) {
+    res.json({});
   });
 
   /* GET Registration Page */

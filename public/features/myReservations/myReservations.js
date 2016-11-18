@@ -14,15 +14,23 @@ function myReservationCtrlConstructor($injector){
 
     vm.myReservations = [];
 
-
     $http.get('/reservation')
         .success(function(data) {
             vm.myReservations.push.apply(vm.myReservations, data.results);
-            // console.log(data.results);
-            console.log(vm.myReservations);
         })
         .error(function(err) {
             console.log(err);
         });
 
+    vm.deleteReservation = function (id) {
+        $http.delete('/reservation/' + id)
+            .success(function(data) {
+                _.delete(vm.myReservations, function (element) {
+                   return element._id == data.id;
+                });
+            })
+            .error(function(err) {
+                console.log(err);
+            });
+    }
 }

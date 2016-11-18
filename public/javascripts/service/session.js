@@ -59,5 +59,13 @@ function sessionServiceConstructor($injector){
             });
     };
 
+    if(service.getSignedInUser()) {
+        $http.get('checkSession')
+            .then(function successCallback(response) {
+                }, function errorCallback(response) {
+                    if(response.status == 401) service.logout();
+            });
+    }
+
     return service;
 }
