@@ -9,15 +9,15 @@
         </md-toolbar>
         <md-card-content>
             <form name="createHotelForm" ng-submit="hotelCreate.createHotel()" flex="100">
-                <div layout-gt-sm="row" flex="50">
+                <div layout-gt-sm="row" flex="50" style="max-width: 100%;">
                     <md-subheader flex="100">General</md-subheader>
                 </div>
                 <div layout-gt-sm="row">
-                    <md-input-container>
+                    <md-input-container style="width: 100%;">
                         <label>Name</label>
                         <input type="text" name="name" ng-model="hotelCreate.hotel.name" required>
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container style="width: 100%;">
                         <input type="text"
                                name="city"
                                ng-model="hotelCreate.hotel.location"
@@ -34,12 +34,12 @@
                     </md-input-container>
                 </div>
                 <div layout-gt-sm="row">
-                    <md-input-container>
+                    <md-input-container style="width: 100%;">
                         <label>Description</label>
                         <textarea type="text" rows="2" name="description" ng-model="hotelCreate.hotel.description" required></textarea>
                     </md-input-container>
                 </div>
-                <div layout-gt-sm="row" flex="50">
+                <div layout-gt-sm="row" flex="50" style="max-width: 100%;">
                     <md-subheader flex="100">Rooms</md-subheader>
                 </div>
 
@@ -95,7 +95,7 @@
                         <md-button class="material-icons" ng-click="hotelCreate.deleteRoom(room)">delete</md-button>
                     </md-input-container>
                 </div>
-                <div layout-gt-sm="column" flex="50">
+                <div layout-gt-sm="column" flex="50" style="max-width: 100%">
                     <div layout-gt-sm="row" flex="100">
                         <md-subheader flex="100">Images</md-subheader>
                     </div>
