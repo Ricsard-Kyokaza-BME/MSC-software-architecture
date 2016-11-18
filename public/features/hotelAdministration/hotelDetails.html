@@ -124,6 +124,9 @@
                                 <md-input-container style="width: 100%;">
                                     {{roomItem.price}} $
                                 </md-input-container>
+                                <md-input-container>
+                                    <md-button class="material-icons md-primary" ng-click="hotelDetailsCtrl.deleteRoom(roomItem)">delete</md-button>
+                                </md-input-container>
                                 <md-input-container >
                                     <md-button class="material-icons md-warn" ng-click="hotelDetailsCtrl.roomModification(roomItem)">edit</md-button>
                                 </md-input-container>
@@ -152,9 +155,6 @@
                                     <md-input-container>
                                         <input type="number" ng-model="room.price" ng-disabled="false" placeholder="price">
                                     </md-input-container>
-                                    <!--<md-input-container>-->
-                                    <!--<md-button class="material-icons" ng-click="hotelCreate.deleteRoom(room)">delete</md-button>-->
-                                    <!--</md-input-container>-->
                                 </div>
                                 <md-input-container>
                                     <md-button class="md-primary" ng-click="hotelDetailsCtrl.addRoom()">Add room</md-button>

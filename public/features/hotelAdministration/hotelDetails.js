@@ -158,6 +158,10 @@ function userLoginCtrlConstructor($injector){
         // console.log(vm.roomsToAddArray);
     };
 
+    vm.deleteRoom = function (item) {
+        console.log(item);
+    };
+
     vm.roomModification = function (roomToModify) {
         console.log("Modify room");
         console.log(roomToModify);
