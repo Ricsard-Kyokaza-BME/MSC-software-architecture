@@ -179,7 +179,19 @@ function userLoginCtrlConstructor($injector){
         console.log(vm.roomsToAddArray);
         // post rooms array to the hotel rooms
 
+        // for (var i = 0; i < vm.roomsToAddArray.length; i++){
+        //     vm.roomsToAddArray[i].hotelId = vm.hotel._id;
+        //     $http.post('/room/' + vm.hotel._id + '/room', vm.roomsToAddArray[0])
+        //         .success(function(data) {
+        //             console.log(data);
+        //         })
+        //         .error(function(err) {
+        //             console.log(err);
+        //         });
+        // }
+
         // clear the array and room variable
+        // vm.roomAdditionCanceled();
     };
 
     function getRoomTypeArray(roomType) {
