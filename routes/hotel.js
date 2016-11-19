@@ -152,7 +152,7 @@ router.post('/:id/image', commons.isAuthenticated, commons.hasHostLevel, imageUp
 /* POST update hotel. */
 router.post('/:id', commons.isAuthenticated, commons.hasHostLevel, function(req, res, next) {
     var hotel = req.body;
-    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, 
+    Hotel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id },
         {name: hotel.name, description: hotel.description, location: hotel.location, luxuryLevel: hotel.luxuryLevel},
         {new: true}, function(err, updatedHotel) {
         if (err){
