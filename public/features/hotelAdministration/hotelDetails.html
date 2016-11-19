@@ -125,20 +125,18 @@
                                     {{roomItem.price}} $
                                 </md-input-container>
                                 <md-input-container>
+                                <md-input-container>
                                     <md-button class="material-icons md-primary" ng-click="hotelDetailsCtrl.deleteRoom(roomItem)">delete</md-button>
-                                </md-input-container>
-                                <md-input-container >
-                                    <md-button class="material-icons md-warn" ng-click="hotelDetailsCtrl.roomModification(roomItem)">edit</md-button>
                                 </md-input-container>
                             </div>
 
                             <!--Room addition ongoing starts-->
                             <div>
-                                <div ng-repeat="room in hotelDetailsCtrl.roomsToAddArray" layout-gt-sm="row" layout-align="start center">
+                                <div ng-repeat="room in hotelDetailsCtrl.roomsToAddArray" layout-gt-sm="row" >
                                     <md-input-container>
                                         <label>Type</label>
                                         <md-select ng-model="room.type" ng-disabled="false">
-                                            <md-option ng-repeat="item in hotelCreate.RoomTypeArray" ng-value="item.value">
+                                            <md-option ng-repeat="item in hotelDetailsCtrl.RoomTypeArray" ng-value="item.value">
                                                 {{item.text | capitalize}}
                                             </md-option>
                                         </md-select>

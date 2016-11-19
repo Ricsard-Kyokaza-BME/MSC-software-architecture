@@ -33,6 +33,8 @@ function userLoginCtrlConstructor($injector){
     vm.room = new Room();
 
 
+    vm.modifyRoom = true;
+
     $http.get('/hotel/' + $stateParams.hotelId)
         .success(function(data) {
             vm.hotel = data;
@@ -152,6 +154,7 @@ function userLoginCtrlConstructor($injector){
     };
 
     vm.addRoom = function () {
+        vm.room.hotelId = vm.hotel._id;
         vm.roomsToAddArray.push(vm.room);
         vm.room = new Room();
         // console.log(vm.room);
@@ -165,6 +168,7 @@ function userLoginCtrlConstructor($injector){
     vm.roomModification = function (roomToModify) {
         console.log("Modify room");
         console.log(roomToModify);
+        vm.modifyRoom = !vm.modifyRoom;
 
     };
 
@@ -180,14 +184,13 @@ function userLoginCtrlConstructor($injector){
         // post rooms array to the hotel rooms
 
         // for (var i = 0; i < vm.roomsToAddArray.length; i++){
-        //     vm.roomsToAddArray[i].hotelId = vm.hotel._id;
-        //     $http.post('/room/' + vm.hotel._id + '/room', vm.roomsToAddArray[0])
-        //         .success(function(data) {
-        //             console.log(data);
-        //         })
-        //         .error(function(err) {
-        //             console.log(err);
-        //         });
+            $http.post('/room/' + vm.hotel._id + '/room', vm.roomsToAddArray[0])
+                .success(function(data) {
+                    console.log(data);
+                })
+                .error(function(err) {
+                    console.log(err);
+                });
         // }
 
         // clear the array and room variable
