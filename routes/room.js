@@ -12,7 +12,7 @@ router.post('/:hotelId/room', function(req, res, next) {
         if (err){
             commons.sendError(req, res, 'Error in creating room', err);
         } else {
-            Hotel.findOneAndUpdate({ _id: req.params.hotelId }, {rooms: {$push: room._id}}, function (err, hotel) {
+            Hotel.findOneAndUpdate({ _id: req.params.hotelId }, {$push: {rooms: room._id}}, function (err, hotel) {
                 err ? commons.sendError(req, res, 'Error in adding room to the hotel', err) : '';
             });
 
