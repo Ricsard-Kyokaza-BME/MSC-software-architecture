@@ -27,7 +27,7 @@ router.delete('/:hotelId/room/:roomId', function(req, res, next) {
             if (err){
                 commons.sendError(req, res, 'Error in getting hotel\'s rooms', err);
             } else {
-                Reservation.remove({ _id: { $in: rooms.reservations } }, function (err) {
+                Reservation.remove({ _id: { $in: room.reservations } }, function (err) {
                     err ? commons.sendError(req, res, 'Error in removing rooms', err) : '';
                 });
 
