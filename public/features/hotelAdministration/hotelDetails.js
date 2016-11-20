@@ -197,13 +197,14 @@ function userLoginCtrlConstructor($injector){
             $http.post('/room/' + vm.hotel._id + '/room', vm.roomsToAddArray[i])
                 .success(function(data) {
                     console.log(data);
+                    vm.hotel.rooms.push(data);
                 })
                 .error(function(err) {
                     console.log(err);
                 });
         }
 
-        vm.hotel.rooms.push.apply(vm.hotel.rooms, vm.roomsToAddArray);
+
         // clear the array and room variable
         vm.roomAdditionCanceled();
     };
