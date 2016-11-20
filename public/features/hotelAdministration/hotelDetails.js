@@ -214,4 +214,8 @@ function userLoginCtrlConstructor($injector){
             return { text: element.replace('_', ' '), value: element };
         });
     }
+
+    vm.editHotel = function () {
+        console.log("Edit hotel" + vm.hotel);
+    }
 }
