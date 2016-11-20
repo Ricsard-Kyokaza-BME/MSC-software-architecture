@@ -1,25 +1,21 @@
 var app = angular.module('HotelReservation');
 
-app.controller('HotelCreateCtrl', hotelCreateCtrlConstructor);
-hotelCreateCtrlConstructor.$inject = ['$scope', '$injector'];
+app.controller('HotelEditCtrl', hotelEditCtrlConstructor);
+hotelEditCtrlConstructor.$inject = ['$scope', '$injector'];
 
-function hotelCreateCtrlConstructor($scope, $injector){
+function hotelEditCtrlConstructor($scope, $injector){
     var $http = $injector.get('$http');
     var $state = $injector.get('$state');
+    var $stateParams = $injector.get('$stateParams');
     var StateHandler = $injector.get('StateHandler');
     var $mdToast = $injector.get('$mdToast');
     var Hotel = $injector.get('Hotel');
-    var Room = $injector.get('Room');
-    var RoomType = $injector.get('RoomType');
     var Upload = $injector.get('Upload');
 
     var vm = this;
 
-    vm.type = 'create';
-    vm.RoomTypeArray = getRoomTypeArray(RoomType);
+    vm.type = 'edit';
     vm.hotel = new Hotel();
-    vm.room = new Room();
-    vm.roomsToAdd = [];
     vm.images = [];
     vm.place = {
         options: {
@@ -30,30 +26,24 @@ function hotelCreateCtrlConstructor($scope, $injector){
         details: {}
     };
 
-    vm.saveHotel = function () {
-        vm.hotel.rooms = _.map(vm.roomsToAdd, function (element) {
-           return element.transformToSend();
+    $http.get('/hotel/' + $stateParams.hotelId)
+        .success(function(data) {
+            vm.hotel = data;
+        })
+        .error(function(err) {
+            console.log(err);
         });
-        $http.post('/hotel', vm.hotel)
+
+    vm.saveHotel = function () {
+        $http.post('/hotel/' + $stateParams.hotelId, vm.hotel)
             .success(function(data) {
-                $mdToast.show($mdToast.simple().content('Hotel created successfully'));
+                $mdToast.show($mdToast.simple().content('Hotel updated successfully'));
                 vm.uploadImages(data._id);
             })
             .error(function(err) {
-                $mdToast.show($mdToast.simple().content('Failed to create hotel'));
+                $mdToast.show($mdToast.simple().content('Failed to update hotel'));
                 console.log(err);
             });
-    };
-
-    vm.createRoom = function () {
-        vm.room.type == '' ? $scope.createHotelForm.type.$invalid = true : $scope.createHotelForm.type.$invalid = false;
-        vm.room.description == '' ? $scope.createHotelForm.description.$invalid = true : $scope.createHotelForm.description.$invalid = false;
-        vm.room.capacity == 0 ? $scope.createHotelForm.capacity.$invalid = true : $scope.createHotelForm.capacity.$invalid = false;
-        vm.room.quantity == 0 ? $scope.createHotelForm.quantity.$invalid = true : $scope.createHotelForm.quantity.$invalid = false;
-        if(vm.room.type != '' && vm.room.description != '' && vm.room.capacity != 0 && vm.room.quantity != 0) {
-            vm.roomsToAdd.push(angular.copy(vm.room));
-            vm.room = new Room();
-        }
     };
 
     vm.uploadImages = function (hotelID) {
@@ -78,10 +68,6 @@ function hotelCreateCtrlConstructor($scope, $injector){
 
     vm.deleteImage = function (image) {
         vm.images.splice(vm.images.indexOf(image), 1);
-    };
-
-    vm.deleteRoom = function (room) {
-        vm.roomsToAdd.splice(vm.roomsToAdd.indexOf(room), 1);
     };
 
     vm.cancelCreate = function () {

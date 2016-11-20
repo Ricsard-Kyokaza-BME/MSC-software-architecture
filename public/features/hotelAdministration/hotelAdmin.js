@@ -28,6 +28,10 @@ function userLoginCtrlConstructor($injector){
         $state.go('hotelsDetails', {hotelId: item._id});
     };
 
+    vm.onHotelEditClicked = function (id) {
+        $state.go('hotelsEdit', {hotelId: id});
+    };
+
     vm.addHotel = function () {
         console.log("Add hotel");
         var hotel = new Hotel(undefined,

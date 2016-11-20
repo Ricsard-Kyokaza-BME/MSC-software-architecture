@@ -6,12 +6,6 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     $mdThemingProvider
         .theme('default')
         .dark()
-        // .backgroundPalette('grey', {
-        //     'default': '800',
-        //     'hue-1': '400', // use shade 100 for the <code>md-hue-1</code> class
-        //     'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
-        //     'hue-3': 'A100'
-        // })
         .primaryPalette('teal')
         .accentPalette('green');
 
@@ -54,7 +48,14 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
         name: 'hotelsCreate',
         url: '/hotels/create',
         templateUrl: "/features/hotelAdministration/hotels-create.html",
-        controller: 'HotelCreateCtrl as hotelCreate'
+        controller: 'HotelCreateCtrl as hotelCtrl'
+    };
+
+    var hotelEdit = {
+        name: 'hotelsEdit',
+        url: '/hotel/:hotelId/edit',
+        templateUrl: "/features/hotelAdministration/hotels-create.html",
+        controller: 'HotelEditCtrl as hotelCtrl'
     };
 
     var myReservations = {
@@ -70,6 +71,7 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     $stateProvider.state(hotelAdministration);
     $stateProvider.state(hotelDetailedState);
     $stateProvider.state(hotelCreate);
+    $stateProvider.state(hotelEdit);
     $stateProvider.state(myReservations);
 });
 

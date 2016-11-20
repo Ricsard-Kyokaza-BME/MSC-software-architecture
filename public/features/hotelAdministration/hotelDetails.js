@@ -216,6 +216,6 @@ function userLoginCtrlConstructor($injector){
     }
 
     vm.editHotel = function () {
-        console.log("Edit hotel" + vm.hotel);
+        $state.go('hotelsEdit', {hotelId: vm.hotel._id});
     }
 }

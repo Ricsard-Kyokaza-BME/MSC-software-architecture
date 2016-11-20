@@ -8,25 +8,25 @@
             </div>
         </md-toolbar>
         <md-card-content>
-            <form name="createHotelForm" ng-submit="hotelCreate.createHotel()" flex="100">
+            <form name="createHotelForm" ng-submit="hotelCtrl.saveHotel()" flex="100">
                 <div layout-gt-sm="row" flex="50" style="max-width: 100%;">
                     <md-subheader flex="100">General</md-subheader>
                 </div>
                 <div layout-gt-sm="row">
                     <md-input-container style="width: 100%;">
                         <label>Name</label>
-                        <input type="text" name="name" ng-model="hotelCreate.hotel.name" required>
+                        <input type="text" name="name" ng-model="hotelCtrl.hotel.name" required>
                     </md-input-container>
                     <md-input-container style="width: 100%;">
                         <input type="text"
                                name="city"
-                               ng-model="hotelCreate.hotel.location"
+                               ng-model="hotelCtrl.hotel.location"
                                ng-autocomplete
                                options="place.options" details="place.details">
                     </md-input-container>
                     <md-input-container>
                         <label>Stars</label>
-                        <md-select id="luxuryLevel" ng-model="hotelCreate.hotel.luxuryLevel">
+                        <md-select id="luxuryLevel" ng-model="hotelCtrl.hotel.luxuryLevel">
                             <md-option ng-repeat="item in [1,2,3,4,5]" ng-value="item">
                                 {{item}}
                             </md-option>
@@ -36,45 +36,45 @@
                 <div layout-gt-sm="row">
                     <md-input-container style="width: 100%;">
                         <label>Description</label>
-                        <textarea type="text" rows="2" name="description" ng-model="hotelCreate.hotel.description" required></textarea>
+                        <textarea type="text" rows="2" name="description" ng-model="hotelCtrl.hotel.description" required></textarea>
                     </md-input-container>
                 </div>
-                <div layout-gt-sm="row" flex="50" style="max-width: 100%;">
+                <div layout-gt-sm="row" flex="50" style="max-width: 100%;" ng-if="hotelCtrl.type != 'edit'">
                     <md-subheader flex="100">Rooms</md-subheader>
                 </div>
 
-                <div layout-gt-sm="row">
+                <div layout-gt-sm="row" ng-if="hotelCtrl.type != 'edit'">
                     <md-input-container>
                         <label>Type</label>
-                        <md-select name="type" ng-model="hotelCreate.room.type">
-                            <md-option ng-repeat="item in hotelCreate.RoomTypeArray" ng-value="item.value">
+                        <md-select name="type" ng-model="hotelCtrl.room.type">
+                            <md-option ng-repeat="item in hotelCtrl.RoomTypeArray" ng-value="item.value">
                                 {{item.text | capitalize}}
                             </md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container>
-                        <input type="text" name="description" placeholder="Description" ng-model="hotelCreate.room.description" >
+                        <input type="text" name="description" placeholder="Description" ng-model="hotelCtrl.room.description" >
                     </md-input-container>
                     <md-input-container>
-                        <input type="number" name="quantity" placeholder="Quantity" ng-model="hotelCreate.room.quantity" >
+                        <input type="number" name="quantity" placeholder="Quantity" ng-model="hotelCtrl.room.quantity" >
                     </md-input-container>
                     <md-input-container>
-                        <input type="number" name="capacity" placeholder="Capacity" ng-model="hotelCreate.room.capacity" >
+                        <input type="number" name="capacity" placeholder="Capacity" ng-model="hotelCtrl.room.capacity" >
                     </md-input-container>
                     <md-input-container>
-                        <input type="number" name="price" placeholder="Price" ng-model="hotelCreate.room.price" >
+                        <input type="number" name="price" placeholder="Price" ng-model="hotelCtrl.room.price" >
                     </md-input-container>
                     <md-input-container>
-                        <md-button class="md-raised md-primary" ng-click="hotelCreate.createRoom()">
+                        <md-button class="md-raised md-primary" ng-click="hotelCtrl.createRoom()">
                             Add room
                         </md-button>
                     </md-input-container>
                 </div>
-                <div ng-repeat="room in hotelCreate.roomsToAdd" layout-gt-sm="row" layout-align="start center">
+                <div ng-if="hotelCtrl.type != 'edit'" ng-repeat="room in hotelCtrl.roomsToAdd" layout-gt-sm="row" layout-align="start center">
                     <md-input-container>
                         <label>Type</label>
                         <md-select ng-model="room.type" ng-disabled="true">
-                            <md-option ng-repeat="item in hotelCreate.RoomTypeArray" ng-value="item.value">
+                            <md-option ng-repeat="item in hotelCtrl.RoomTypeArray" ng-value="item.value">
                                 {{item.text | capitalize}}
                             </md-option>
                         </md-select>
@@ -92,7 +92,7 @@
                         <input type="number" ng-model="room.price" ng-disabled="true">
                     </md-input-container>
                     <md-input-container>
-                        <md-button class="material-icons" ng-click="hotelCreate.deleteRoom(room)">delete</md-button>
+                        <md-button class="material-icons" ng-click="hotelCtrl.deleteRoom(room)">delete</md-button>
                     </md-input-container>
                 </div>
                 <div layout-gt-sm="column" flex="50" style="max-width: 100%">
@@ -100,27 +100,28 @@
                         <md-subheader flex="100">Images</md-subheader>
                     </div>
                     <div layout-gt-sm="row" flex="100">
-                        <md-input-container ng-if="hotelCreate.images.length > 0" flex="100">
+                        <md-input-container ng-if="hotelCtrl.images.length > 0" flex="100">
                             <md-list>
-                                <md-list-item ng-repeat="image in hotelCreate.images">
+                                <md-list-item ng-repeat="image in hotelCtrl.images">
                                     <span class="flex">{{image.name}}</span>
-                                    <md-button class="material-icons" ng-click="hotelCreate.deleteImage(image)">delete</md-button>
+                                    <md-button class="material-icons" ng-click="hotelCtrl.deleteImage(image)">delete</md-button>
                                 </md-list-item>
                             </md-list>
                         </md-input-container>
                     </div>
                     <div layout-gt-sm="row">
-                        <md-progress-linear ng-if="hotelCreate.uploadProgress" md-mode="determinate" value="{{hotelCreate.determinateValue}}"></md-progress-linear>
+                        <md-progress-linear ng-if="hotelCtrl.uploadProgress" md-mode="determinate" value="{{hotelCtrl.determinateValue}}"></md-progress-linear>
                         <md-input-container>
                             <md-button class="md-raised md-primary"
                                        name="imageSelect"
-                                       ngf-multiple="true" ngf-select ng-model="hotelCreate.images">Select images</md-button>
+                                       ngf-multiple="true" ngf-select ng-model="hotelCtrl.images">Select images</md-button>
                         </md-input-container>
                     </div>
                 </div>
                 <div layout-gt-sm="row">
-                    <md-button type="submit" class="md-raised md-primary">Create</md-button>
-                    <md-button class="md-raised md-warn" ng-click="hotelCreate.cancelCreate()">Cancel</md-button>
+                    <md-button type="submit" ng-if="hotelCtrl.type == 'create'" class="md-raised md-primary">Create</md-button>
+                    <md-button type="submit" ng-if="hotelCtrl.type == 'edit'" class="md-raised md-primary">Save</md-button>
+                    <md-button class="md-raised md-warn" ng-click="hotelCtrl.cancelCreate()">Cancel</md-button>
                 </div>
             </form>
         </md-card-content>
