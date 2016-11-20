@@ -163,6 +163,16 @@ function userLoginCtrlConstructor($injector){
 
     vm.deleteRoom = function (item) {
         console.log(item);
+
+        $http.delete('/room/' + vm.hotel._id + '/room/' + item._id)
+            .success(function(data) {
+                _.delete(vm.hotel.rooms, function (element) {
+                    return element._id == data.id;
+                });
+            })
+            .error(function(err) {
+                console.log(err);
+            });
     };
 
     vm.roomModification = function (roomToModify) {
@@ -183,18 +193,19 @@ function userLoginCtrlConstructor($injector){
         console.log(vm.roomsToAddArray);
         // post rooms array to the hotel rooms
 
-        // for (var i = 0; i < vm.roomsToAddArray.length; i++){
-            $http.post('/room/' + vm.hotel._id + '/room', vm.roomsToAddArray[0])
+        for (var i = 0; i < vm.roomsToAddArray.length; i++){
+            $http.post('/room/' + vm.hotel._id + '/room', vm.roomsToAddArray[i])
                 .success(function(data) {
                     console.log(data);
                 })
                 .error(function(err) {
                     console.log(err);
                 });
-        // }
+        }
 
+        vm.hotel.rooms.push.apply(vm.hotel.rooms, vm.roomsToAddArray);
         // clear the array and room variable
-        // vm.roomAdditionCanceled();
+        vm.roomAdditionCanceled();
     };
 
     function getRoomTypeArray(roomType) {
