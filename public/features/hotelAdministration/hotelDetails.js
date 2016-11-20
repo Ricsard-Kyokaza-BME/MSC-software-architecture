@@ -38,7 +38,6 @@ function userLoginCtrlConstructor($injector){
     $http.get('/hotel/' + $stateParams.hotelId)
         .success(function(data) {
             vm.hotel = data;
-            console.log(vm.hotel);
         })
         .error(function(err) {
             console.log(err);
@@ -48,8 +47,6 @@ function userLoginCtrlConstructor($injector){
         .success(function(data) {
             vm.reviews.push.apply(vm.reviews, data.results);
             vm.revievRating = data.averageRating;
-            console.log(vm.reviews);
-            console.log(vm.revievRating);
         })
         .error(function(err) {
             console.log(err);
@@ -67,20 +64,16 @@ function userLoginCtrlConstructor($injector){
 
 
     vm.addReservation = function (roomItem) {
-        // console.log(roomItem);
-        // console.log(vm.datePicker);
         var reservation = new Reservation('','',roomItem._id, vm.hotel._id, vm.datePicker.startDate, vm.datePicker.endDate);
 
         if(vm.validateDates(vm.datePicker.startDate, vm.datePicker.endDate)){
             $http.post('/reservation', reservation.transformToSend())
                 .success(function(data) {
                     $mdToast.show($mdToast.simple().content('Reservation done!'));
-                    console.log(data);
                 })
                 .error(function(err) {
                     $mdToast.show($mdToast.simple().content('Failed to create reservation!'));
                     console.log(err);
-                    $state.go('login');
                 });
         }else {
             $mdToast.show($mdToast.simple().content('Please select a START date and an END date!'));
@@ -93,11 +86,9 @@ function userLoginCtrlConstructor($injector){
         if(startD == undefined || endD == undefined){
             return undefined;
         }
-
         if(startD < currentDate || endD < currentDate){
             return undefined;
         }
-
         if(endD < startD){
             return undefined;
         }
@@ -114,7 +105,6 @@ function userLoginCtrlConstructor($injector){
         var rev = new Review( '', '', vm.hotel._id, vm.reviewToSend.description, new Date(), vm.reviewToSend.rating);
         $http.post('/review', rev.transformToSend())
             .success(function(data) {
-                console.log(data);
                 $mdToast.show($mdToast.simple().content('Review successfully added.'));
                 vm.reviews.push(data);
                 vm.reviewToSend = {};
@@ -130,10 +120,8 @@ function userLoginCtrlConstructor($injector){
     };
 
     vm.deleteReview = function (revItem) {
-        console.log(revItem);
         $http.delete('/review/' + revItem._id)
             .success(function(data) {
-                console.log(data);
                 _.delete(vm.reviews, function (element) {
                     return element._id == data.id;
                 });
@@ -157,13 +145,9 @@ function userLoginCtrlConstructor($injector){
         vm.room.hotelId = vm.hotel._id;
         vm.roomsToAddArray.push(vm.room);
         vm.room = new Room();
-        // console.log(vm.room);
-        // console.log(vm.roomsToAddArray);
     };
 
     vm.deleteRoom = function (item) {
-        console.log(item);
-
         $http.delete('/room/' + vm.hotel._id + '/room/' + item._id)
             .success(function(data) {
                 _.delete(vm.hotel.rooms, function (element) {
@@ -175,35 +159,21 @@ function userLoginCtrlConstructor($injector){
             });
     };
 
-    vm.roomModification = function (roomToModify) {
-        console.log("Modify room");
-        console.log(roomToModify);
-        vm.modifyRoom = !vm.modifyRoom;
-
-    };
-
     vm.roomAdditionCanceled = function () {
         vm.roomsToAddArray = [];
         vm.room = new Room();
     };
 
     vm.roomAdditionDone = function () {
-        console.log("DONE");
-        // vm.roomsToAddArray.push(vm.room);
-        console.log(vm.roomsToAddArray);
-        // post rooms array to the hotel rooms
-
         for (var i = 0; i < vm.roomsToAddArray.length; i++){
             $http.post('/room/' + vm.hotel._id + '/room', vm.roomsToAddArray[i])
                 .success(function(data) {
-                    console.log(data);
                     vm.hotel.rooms.push(data);
                 })
                 .error(function(err) {
                     console.log(err);
                 });
         }
-
 
         // clear the array and room variable
         vm.roomAdditionCanceled();

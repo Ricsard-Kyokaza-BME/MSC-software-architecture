@@ -32,34 +32,6 @@ function userLoginCtrlConstructor($injector){
         $state.go('hotelsEdit', {hotelId: id});
     };
 
-    vm.addHotel = function () {
-        console.log("Add hotel");
-        var hotel = new Hotel(undefined,
-            "MyHotel_name",
-            "me_owner",
-            "This is the description",
-            "Alma utca location",
-            5,
-            [new Room(
-                undefined,
-                "Standard type",
-                "Room description",
-                "",
-                3,
-                4
-            )]
-        );
-
-        $http.post('/hotel', hotel)
-            .success(function(data) {
-                console.log(data);
-                $state.go(StateHandler.getPreviousStateName());
-            })
-            .error(function(err) {
-                console.log(err);
-            });
-    };
-
     vm.createNewHotel = function () {
         $state.go('hotelsCreate');
     };
