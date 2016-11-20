@@ -56,8 +56,6 @@ function hotelDetailsCtrlConstructor($scope, $injector){
             });
     }, true);
 
-
-
     vm.addReservation = function (roomItem) {
         var reservation = new Reservation('','',roomItem._id, vm.hotel._id, vm.datePicker.startDate, vm.datePicker.endDate);
 
