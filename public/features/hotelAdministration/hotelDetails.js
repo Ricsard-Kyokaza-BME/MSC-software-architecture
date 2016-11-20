@@ -1,9 +1,9 @@
 var app = angular.module('HotelReservation');
 
-app.controller('HotelDetailsCtrl', userLoginCtrlConstructor);
-userLoginCtrlConstructor.$inject = ['$injector'];
+app.controller('HotelDetailsCtrl', hotelDetailsCtrlConstructor);
+hotelDetailsCtrlConstructor.$inject = ['$scope', '$injector'];
 
-function userLoginCtrlConstructor($injector){
+function hotelDetailsCtrlConstructor($scope, $injector){
     var $http = $injector.get('$http');
     var SessionService = $injector.get('SessionService');
     var $state = $injector.get('$state');
@@ -43,14 +43,20 @@ function userLoginCtrlConstructor($injector){
 
     /* Reservations */
 
-    $http.post('/hotel/' + $stateParams.hotelId + '/rooms', vm.datePicker)
-        .success(function(data) {
-            vm.hotel.rooms = [];
-            vm.hotel.rooms.push.apply(vm.hotel.rooms, data);
-        })
-        .error(function(err) {
-            console.log(err);
-        });
+    $scope.$watch(function () {
+        return vm.datePicker;
+    }, function () {
+        $http.post('/hotel/' + $stateParams.hotelId + '/rooms', vm.datePicker)
+            .success(function(data) {
+                vm.hotel.rooms = [];
+                vm.hotel.rooms.push.apply(vm.hotel.rooms, data);
+            })
+            .error(function(err) {
+                console.log(err);
+            });
+    }, true);
+
+
 
     vm.addReservation = function (roomItem) {
         var reservation = new Reservation('','',roomItem._id, vm.hotel._id, vm.datePicker.startDate, vm.datePicker.endDate);
@@ -65,24 +71,19 @@ function userLoginCtrlConstructor($injector){
                     console.log(err);
                 });
         }else {
-            $mdToast.show($mdToast.simple().content('Please select a START date and an END date!'));
+            $mdToast.show($mdToast.simple().content('Please select a valid START and END date!'));
         }
     };
 
     vm.validateDates = function (startD, endD) {
         var currentDate = Date.now();
+        var end;
 
-        if(startD == undefined || endD == undefined){
-            return undefined;
-        }
-        if(startD < currentDate || endD < currentDate){
-            return undefined;
-        }
-        if(endD < startD){
-            return undefined;
-        }
+        ((startD == undefined || endD == undefined)
+        || (startD < currentDate || endD < currentDate)
+        || (endD < startD)) ? end = undefined : end = true;
 
-        return true;
+        return end;
     };
 
 
