@@ -16,8 +16,6 @@ function userLoginCtrlConstructor($injector){
     var Review = $injector.get('Review');
     var RoomType = $injector.get('RoomType');
 
-
-
     var vm = this;
 
     vm.hotel = {};
@@ -32,7 +30,6 @@ function userLoginCtrlConstructor($injector){
     vm.RoomTypeArray = getRoomTypeArray(RoomType);
     vm.room = new Room();
 
-
     vm.modifyRoom = true;
 
     $http.get('/hotel/' + $stateParams.hotelId)
@@ -43,14 +40,8 @@ function userLoginCtrlConstructor($injector){
             console.log(err);
         });
 
-    $http.get('/review/' + $stateParams.hotelId)
-        .success(function(data) {
-            vm.reviews.push.apply(vm.reviews, data.results);
-            vm.revievRating = data.averageRating;
-        })
-        .error(function(err) {
-            console.log(err);
-        });
+
+    /* Reservations */
 
     $http.post('/hotel/' + $stateParams.hotelId + '/rooms', vm.datePicker)
         .success(function(data) {
@@ -60,8 +51,6 @@ function userLoginCtrlConstructor($injector){
         .error(function(err) {
             console.log(err);
         });
-
-
 
     vm.addReservation = function (roomItem) {
         var reservation = new Reservation('','',roomItem._id, vm.hotel._id, vm.datePicker.startDate, vm.datePicker.endDate);
@@ -96,9 +85,17 @@ function userLoginCtrlConstructor($injector){
         return true;
     };
 
-    vm.addReview = function () {
-        vm.canAddReviewClicked();
-    };
+
+    /* Reviews */
+
+    $http.get('/review/' + $stateParams.hotelId)
+        .success(function(data) {
+            vm.reviews.push.apply(vm.reviews, data.results);
+            vm.revievRating = data.averageRating;
+        })
+        .error(function(err) {
+            console.log(err);
+        });
 
     vm.saveReview = function () {
         vm.canAddReviewClicked();
@@ -131,15 +128,20 @@ function userLoginCtrlConstructor($injector){
             });
     };
 
+
+    /* Details */
+
     vm.getStarsRange = function(count){
         var ratings = [];
-
         for (var i = 0; i < count; i++) {
             ratings.push(i)
         }
 
         return ratings;
     };
+
+
+    /* Rooms */
 
     vm.addRoom = function () {
         vm.room.hotelId = vm.hotel._id;
@@ -185,7 +187,4 @@ function userLoginCtrlConstructor($injector){
         });
     }
 
-    vm.editHotel = function () {
-        $state.go('hotelsEdit', {hotelId: vm.hotel._id});
-    }
 }

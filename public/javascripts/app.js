@@ -47,14 +47,14 @@ app.config(function($stateProvider, $mdIconProvider, $mdThemingProvider) {
     var hotelCreate = {
         name: 'hotelsCreate',
         url: '/hotels/create',
-        templateUrl: "/features/hotelAdministration/hotels-create.html",
+        templateUrl: "/features/hotelAdministration/hotelCreate.html",
         controller: 'HotelCreateCtrl as hotelCtrl'
     };
 
     var hotelEdit = {
         name: 'hotelsEdit',
         url: '/hotel/:hotelId/edit',
-        templateUrl: "/features/hotelAdministration/hotels-create.html",
+        templateUrl: "/features/hotelAdministration/hotelCreate.html",
         controller: 'HotelEditCtrl as hotelCtrl'
     };
 

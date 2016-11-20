@@ -50,7 +50,7 @@
 
                             <!--Addreview start-->
                             <md-card-actions layout="row" layout-align="start center" ng-if="SessionService.getSignedInUser() != undefined">
-                                <md-button class="md-raised md-primary" ng-if="!hotelDetailsCtrl.canAddReview" ng-click="hotelDetailsCtrl.addReview()">Add review</md-button>
+                                <md-button class="md-raised md-primary" ng-if="!hotelDetailsCtrl.canAddReview" ng-click="hotelDetailsCtrl.canAddReviewClicked()">Add review</md-button>
                             </md-card-actions>
                             <div ng-if="hotelDetailsCtrl.canAddReview" layout="row" layout-align="center center">
                                 <md-input-container>
@@ -69,7 +69,7 @@
                                     <md-button class="material-icons md-primary" ng-click="hotelDetailsCtrl.saveReview()">save</md-button>
                                 </md-input-container>
                                 <md-input-container>
-                                    <md-button class="material-icons md-warn" ng-click="hotelDetailsCtrl.addReview()">cancel</md-button>
+                                    <md-button class="material-icons md-warn" ng-click="hotelDetailsCtrl.canAddReviewClicked()">cancel</md-button>
                                 </md-input-container>
                             </div>
                             <!--Addreview end-->
