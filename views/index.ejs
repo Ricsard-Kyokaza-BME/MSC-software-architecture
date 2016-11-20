@@ -4,13 +4,11 @@
   <body ng-app="HotelReservation" ng-controller="BootCtrl">
   <md-toolbar class="md-hue-2">
     <div class="md-toolbar-tools" layout-xs="column" layout="row" layout-align="space-between center">
-      <!--<md-content class="md-padding" layout-xs="column" layout="row">-->
-        <md-nav-bar md-selected-nav-item="getCurrentState().name" layout-xs="column" layout="row" nav-bar-aria-label="navigation links">
-          <md-nav-item md-nav-href="#/" name="index">Browse</md-nav-item>
-          <md-nav-item ng-if="SessionService.getSignedInUser().role == 'guest'" md-nav-href="#/reservations" name="reservations">My reservations</md-nav-item>
-          <md-nav-item ng-if="SessionService.getSignedInUser().role=='host'" md-nav-href="#/hotels" name="hotels">hotels</md-nav-item>
-        </md-nav-bar>
-      <!--</md-content>-->
+      <md-nav-bar md-selected-nav-item="getCurrentState().name" layout-xs="column" layout="row" nav-bar-aria-label="navigation links">
+        <md-nav-item md-nav-href="#/" name="index">Browse</md-nav-item>
+        <md-nav-item ng-if="SessionService.getSignedInUser().role == 'guest'" md-nav-href="#/reservations" name="reservations">My reservations</md-nav-item>
+        <md-nav-item ng-if="SessionService.getSignedInUser().role=='host'" md-nav-href="#/hotels" name="hotels">hotels</md-nav-item>
+      </md-nav-bar>
       <md-menu md-position-mode="target-right target" >
         <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
           <md-icon class="material-icons">face</md-icon>
